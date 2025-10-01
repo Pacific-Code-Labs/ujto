@@ -89,7 +89,7 @@ export function useAuth() {
         console.log('Amplify user found, fetching user profile...');
         
         // Use the user profile endpoint with Cognito user ID
-        const response = await authenticatedRequest('GET', `/api/users/${amplifyUser.userId}/profile`);
+        const response = await authenticatedRequest('GET', `/api/users/${amplifyUser.userId}`);
         if (!response.ok) {
           console.log('Profile request failed with status:', response.status);
           if (response.status === 401 || response.status === 403) {

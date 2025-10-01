@@ -35,8 +35,6 @@ export const transcriptionService = new TranscriptionService(
   videoTitleService
 );
 
-// Middlewares removed - authentication now handled by AWS API Gateway
-
 // Modern controllers with embedded routes (AWS API Gateway compatible)
 export const modernTranscriptionController = new ModernTranscriptionController(transcriptionService);
 
@@ -44,5 +42,3 @@ export const modernUserController = new ModernUserController(userRepository);
 export const modernPaymentController = new ModernPaymentController(userRepository);
 export const modernHealthController = new ModernHealthController();
 export const notificationController = new NotificationController(notificationService);
-
-// Legacy routes removed - all functionality migrated to modern controllers

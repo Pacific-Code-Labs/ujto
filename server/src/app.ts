@@ -63,8 +63,6 @@ export async function createApp(): Promise<Express> {
   app.use('/api/payments', modernPaymentController.getRouter());
   app.use('/api', notificationController.getRouter());
 
-  // Remove duplicate health endpoint (handled by healthRoutes)
-
   // Error handling middleware
   app.use((err: any, req: any, res: any, next: any) => {
     console.error('Unhandled error:', err);
