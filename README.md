@@ -17,8 +17,8 @@ The backend lives in separate repositories:
 
 ```bash
 npm install
-cp .env.example .env   # point VITE_API_BASE_URL at a running API
-npm run dev            # http://localhost:5173
+bash scripts/load-env-from-ssm.sh prod   # writes .env.local from SSM (needs AWS access)
+npm run dev                              # http://localhost:5173
 ```
 
 | Script | What it does |
@@ -32,6 +32,8 @@ npm run dev            # http://localhost:5173
 
 Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages (custom domain from `client/public/CNAME`).
 
-Build-time values come from repository secrets: `VITE_API_BASE_URL`, `VITE_AWS_COGNITO_USER_POOL_ID`, `VITE_AWS_COGNITO_CLIENT_ID`, `VITE_STRIPE_PUBLIC_KEY`. These are public identifiers, since they ship to the browser; never put secret keys in them.
+Build-time values (`VITE_*`) are read from AWS SSM Parameter Store at `/video-transcript/<env>/web/*` by `scripts/load-env-from-ssm.sh`, both locally and in the Pages workflow. The workflow assumes a read-only role through GitHub OIDC; its ARN is the only repository secret (`AWS_WEB_BUILD_ROLE_ARN`). These values ship to the browser, so they are public identifiers — never store secret keys under that path.
+
+Without AWS access, copy `.env.example` to `.env.local` and fill it in by hand.
 
 See [GITHUB_PAGES_SETUP.md](GITHUB_PAGES_SETUP.md) for Pages and DNS setup.

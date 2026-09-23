@@ -102,7 +102,6 @@ export default function PayPalButton({
       console.log("PayPal Button: Environment check:", {
         hostname: window.location.hostname,
         protocol: window.location.protocol,
-        isReplit: window.location.hostname.includes('replit.dev')
       });
       
       const clientToken: string = await fetch(apiUrl)
