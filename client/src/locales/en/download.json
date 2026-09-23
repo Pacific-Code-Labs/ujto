@@ -1,0 +1,10 @@
+{
+  "button": "Download",
+  "notReady": "Transcript not ready",
+  "txt": "Text (.txt)",
+  "srt": "Subtitles (.srt)",
+  "vtt": "Web subtitles (.vtt)",
+  "proOnly": "Pro",
+  "proHint": "Available on the Pro plan",
+  "failed": "Download failed"
+}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { listTranscriptions, queryKeys } from "@/lib/api";
+import { DownloadMenu } from "@/components/DownloadMenu";
 import type { Transcription } from "@/lib/api-types";
 import {
   X,
@@ -159,20 +160,6 @@ export default function TranscriptionSidebar({
     }
   };
 
-  const handleDownloadTranscript = (transcription: Transcription) => {
-    const blob = new Blob([transcription.transcript], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `transcription-${transcription.id}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
-
-    toast({
-      title: t("messages.downloadTitle"),
-      description: t("messages.downloadStarted"),
-    });
-  };
 
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -325,26 +312,13 @@ export default function TranscriptionSidebar({
                         className="h-8 w-8 p-0"
                         title={
                           transcription.status === "completed"
-                            ? "Copy transcript"
-                            : "Transcript not ready"
+                            ? t("results.copy")
+                            : t("download.notReady")
                         }
                       >
                         <Copy className="h-3 w-3" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDownloadTranscript(transcription)}
-                        disabled={!transcription.transcript}
-                        className="h-8 w-8 p-0"
-                        title={
-                          transcription.status === "completed"
-                            ? "Download transcript"
-                            : "Transcript not ready"
-                        }
-                      >
-                        <Download className="h-3 w-3" />
-                      </Button>
+                      <DownloadMenu transcription={transcription} />
                     </div>
                   </div>
                 </CardContent>

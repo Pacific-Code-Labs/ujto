@@ -24,6 +24,8 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 import { Icons } from "@/components/ui/icons";
+import { DownloadMenu } from "@/components/DownloadMenu";
+import { useUsage } from "@/hooks/useUsage";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { NotificationDropdown } from "@/components/NotificationDropdown";
@@ -44,10 +46,10 @@ export default function Dashboard() {
   const [videoUrl, setVideoUrl] = useState("");
   const [isTranscribing, setIsTranscribing] = useState(false);
 
-  // Calculate limit status early
-  const dailyUsage = user?.transcriptionsUsed || 0;
-  const dailyLimit = 3;
-  const isLimitReached = dailyUsage >= dailyLimit;
+  // Plan usage comes from the API (daily limit resets at 00:00 UTC)
+  const { usage, isLimitReached, isUnlimited } = useUsage();
+  const dailyUsage = usage?.usedToday ?? 0;
+  const dailyLimit = isUnlimited ? "∞" : usage?.dailyLimit ?? "…";
 
   // Helper function to get video title with fallback
   const getVideoTitle = (url: string) => {
@@ -217,7 +219,7 @@ export default function Dashboard() {
       return;
     }
 
-    if (isLimitReached && !user?.isPro) {
+    if (isLimitReached) {
       toast({
         title: t("messages.error"),
         description: t("messages.limitReached"),
@@ -244,6 +246,7 @@ export default function Dashboard() {
       setVideoUrl("");
       queryClient.invalidateQueries({ queryKey: queryKeys.transcriptions(user?.id) });
       queryClient.invalidateQueries({ queryKey: queryKeys.profile });
+      queryClient.invalidateQueries({ queryKey: queryKeys.usage(user?.id) });
     } catch (error: any) {
       console.error("Transcription creation error:", error);
       toast({
@@ -427,8 +430,7 @@ export default function Dashboard() {
 
               <div className="flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center">
                 <div className="text-sm text-gray-600 dark:text-gray-400">
-                  {t("dashboard.dailyUsage")}: {dailyUsage} /{" "}
-                  {user?.isPro ? "∞" : dailyLimit}
+                  {t("dashboard.dailyUsage")}: {dailyUsage} / {dailyLimit}
                 </div>
 
                 <div className="flex gap-2">
@@ -624,57 +626,7 @@ export default function Dashboard() {
                                 )}
                             </div>
                             <div className="flex gap-1">
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => {
-                                  if (transcription.transcript) {
-                                    navigator.clipboard.writeText(
-                                      transcription.transcript,
-                                    );
-                                    toast({
-                                      title: t("messages.success"),
-                                      description: t("history.copied"),
-                                    });
-                                  }
-                                }}
-                                disabled={!transcription.transcript}
-                                className="h-8 w-8 p-0"
-                                title={
-                                  transcription.status === "completed"
-                                    ? "Copy transcript"
-                                    : "Transcript not ready"
-                                }
-                              >
-                                <Icons.copy className="h-3 w-3" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => {
-                                  if (transcription.transcript) {
-                                    const blob = new Blob(
-                                      [transcription.transcript],
-                                      { type: "text/plain" },
-                                    );
-                                    const url = URL.createObjectURL(blob);
-                                    const a = document.createElement("a");
-                                    a.href = url;
-                                    a.download = `transcription-${transcription.videoTitle || transcription.id}.txt`;
-                                    a.click();
-                                    URL.revokeObjectURL(url);
-                                  }
-                                }}
-                                disabled={!transcription.transcript}
-                                className="h-8 w-8 p-0"
-                                title={
-                                  transcription.status === "completed"
-                                    ? "Download transcript"
-                                    : "Transcript not ready"
-                                }
-                              >
-                                <Icons.download className="h-3 w-3" />
-                              </Button>
+                              <DownloadMenu transcription={transcription} />
                             </div>
                           </div>
                         </div>

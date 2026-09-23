@@ -91,6 +91,7 @@ export default function VideoTranscriptionForm({
       // Refresh the sidebar/dashboard list and the usage counter
       await queryClient.invalidateQueries({ queryKey: queryKeys.transcriptions(user.id) });
       await queryClient.invalidateQueries({ queryKey: queryKeys.profile });
+      await queryClient.invalidateQueries({ queryKey: queryKeys.usage(user.id) });
 
       toast({
         title: t('transcription.queued.title'),
@@ -157,7 +158,7 @@ export default function VideoTranscriptionForm({
       
       <div className="mt-4 flex items-center justify-center text-sm text-gray-500 dark:text-gray-400">
         <Gift className="mr-2 h-4 w-4 text-accent" />
-        <span>{remainingTranscriptions} {t('hero.remaining')}</span>
+        <span>{Number.isFinite(remainingTranscriptions) ? remainingTranscriptions : "∞"} {t("hero.remaining")}</span>
       </div>
     </div>
   );
