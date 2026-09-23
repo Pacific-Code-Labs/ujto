@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/hooks/useAuth';
 import { apiRequest } from '@/lib/queryClient';
-import type { Notification } from '@shared/schema';
+import type { Notification } from '@/lib/api-types';
 
 interface NotificationResponse {
   notifications: Notification[];

@@ -8,7 +8,7 @@ import type {
   LoginRequest, 
   VerifyEmailRequest,
   RefreshTokenRequest 
-} from '@shared/auth-schema';
+} from '@/lib/auth-schema';
 
 // Amplify handles token storage automatically, so we don't need manual storage utilities
 
