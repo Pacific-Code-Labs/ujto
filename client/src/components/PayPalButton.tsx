@@ -8,6 +8,7 @@
 // <BEGIN_EXACT_CODE>
 import React, { useEffect } from "react";
 import { API_BASE_URL } from "@/lib/config";
+import { apiFetch } from "@/lib/api";
 
 declare global {
   namespace JSX {
@@ -37,23 +38,13 @@ export default function PayPalButton({
       currency: currency,
       intent: intent,
     };
-    const response = await fetch(`${API_BASE_URL}/api/paypal/order`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderPayload),
-    });
-    const output = await response.json();
+    // TODO(payments): backend returns 501 until payments are ported
+    const output = await apiFetch<{ id: string }>("POST", "/api/payments/paypal/order", orderPayload);
     return { orderId: output.id };
   };
 
   const captureOrder = async (orderId: string) => {
-    const response = await fetch(`${API_BASE_URL}/api/paypal/order/${orderId}/capture`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
+    const data = await apiFetch("POST", `/api/payments/paypal/order/${orderId}/capture`);
 
     return data;
   };
@@ -105,7 +96,7 @@ export default function PayPalButton({
     try {
       console.log("PayPal Button: Initializing PayPal");
       const baseUrl = API_BASE_URL;
-      const apiUrl = `${baseUrl}/api/paypal/setup`;
+      const apiUrl = `${baseUrl}/api/payments/paypal/setup`;
       console.log("PayPal Button: Base URL:", baseUrl);
       console.log("PayPal Button: Fetching client token from:", apiUrl);
       console.log("PayPal Button: Environment check:", {

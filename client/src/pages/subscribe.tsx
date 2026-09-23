@@ -118,11 +118,11 @@ export default function Subscribe() {
     setIsLoading(true);
     
     try {
-      const response = await apiRequest("POST", "/api/create-subscription", { 
-        email, 
-        planType: 'pro' 
+      // TODO(payments): backend returns 501 until payments are ported
+      const data = await apiRequest("POST", "/api/payments/get-or-create-subscription", {
+        email,
+        planType: 'pro'
       });
-      const data = await response.json();
       
       setClientSecret(data.clientSecret);
       setIsSetupComplete(true);

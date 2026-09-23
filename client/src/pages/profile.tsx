@@ -8,7 +8,7 @@ import { useRequireEmailVerification } from '@/hooks/useEmailVerification';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useLocation } from 'wouter';
-import { apiRequest } from '@/lib/queryClient';
+import { queryKeys, updateProfile } from '@/lib/api';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -59,8 +59,7 @@ export default function Profile() {
   // Update profile mutation
   const updateProfileMutation = useMutation({
     mutationFn: async (data: ProfileForm) => {
-      const response = await apiRequest('PUT', '/api/auth/profile', data);
-      return response;
+      return updateProfile(user!.id, data);
     },
     onSuccess: async (updatedUser) => {
       toast({
@@ -69,7 +68,7 @@ export default function Profile() {
       });
       
       // Invalidate user query to refetch updated data
-      await queryClient.invalidateQueries({ queryKey: ['/api/auth/me'] });
+      await queryClient.invalidateQueries({ queryKey: queryKeys.profile });
       
       // Wait a bit for the cache to update, then redirect
       setTimeout(() => {

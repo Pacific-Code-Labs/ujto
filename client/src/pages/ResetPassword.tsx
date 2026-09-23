@@ -9,11 +9,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { confirmResetPassword } from "aws-amplify/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { Eye, EyeOff } from "lucide-react";
 
 const resetPasswordSchema = z.object({
+  code: z.string().regex(/^\d{6}$/, "Enter the 6-digit code from your email"),
   newPassword: z.string().min(8, "Password must be at least 8 characters"),
   confirmPassword: z.string().min(8, "Password must be at least 8 characters"),
 }).refine((data) => data.newPassword === data.confirmPassword, {
@@ -28,24 +29,25 @@ export default function ResetPassword() {
   const { toast } = useToast();
   const [location, navigate] = useLocation();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const form = useForm<ResetPasswordForm>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
+      code: "",
       newPassword: "",
       confirmPassword: "",
     },
   });
 
   useEffect(() => {
-    // Extract token from URL query parameters
+    // Cognito emails a code; ForgotPassword passes the address along in ?email=
     const urlParams = new URLSearchParams(window.location.search);
-    const resetToken = urlParams.get('token');
+    const resetEmail = urlParams.get('email');
     
-    if (!resetToken) {
+    if (!resetEmail) {
       toast({
         title: t("messages.error"),
         description: t("auth.reset.invalidLink"),
@@ -55,17 +57,17 @@ export default function ResetPassword() {
       return;
     }
     
-    setToken(resetToken);
+    setEmail(resetEmail);
   }, [location, navigate, toast, t]);
 
   const resetPasswordMutation = useMutation({
     mutationFn: async (data: ResetPasswordForm) => {
-      if (!token) {
-        throw new Error("Reset token is missing");
+      if (!email) {
+        throw new Error("Email is missing from the reset link");
       }
-      console.log("Sending reset password request...");
-      return apiRequest("POST", "/api/auth/reset-password", {
-        token,
+      return confirmResetPassword({
+        username: email,
+        confirmationCode: data.code,
         newPassword: data.newPassword,
       });
     },
@@ -116,7 +118,7 @@ export default function ResetPassword() {
     );
   }
 
-  if (!token) {
+  if (!email) {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="w-full max-w-md">
@@ -151,6 +153,22 @@ export default function ResetPassword() {
         </CardHeader>
         <CardContent>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="code">{t("auth.verify.code")}</Label>
+              <Input
+                id="code"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                maxLength={6}
+                placeholder={t("auth.verify.codePlaceholder")}
+                {...form.register("code")}
+                className={form.formState.errors.code ? "border-red-500" : ""}
+              />
+              {form.formState.errors.code && (
+                <p className="text-sm text-red-500">{form.formState.errors.code.message}</p>
+              )}
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="newPassword">{t("auth.reset.newPassword")}</Label>
               <div className="relative">

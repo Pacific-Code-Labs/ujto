@@ -2,16 +2,17 @@
 
 export interface Transcription {
   id: string;
-  userId: string | null;
+  userId: string;
   videoUrl: string;
-  videoTitle: string | null;
-  transcript: string | null;
-  status: string | null;
-  duration: string | null;
-  wordCount: number | null;
-  processingTime: string | null;
-  accuracy: string | null;
-  createdAt: Date | null;
+  videoTitle?: string;
+  transcript: string;
+  status: "pending" | "processing" | "completed" | "failed" | string;
+  duration: number;
+  wordCount: number;
+  processingTime: number;
+  accuracy: number;
+  errorMessage?: string;
+  createdAt: string;
 }
 
 export interface Notification {

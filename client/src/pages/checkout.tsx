@@ -97,8 +97,8 @@ export default function Checkout() {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    apiRequest("POST", "/api/create-payment-intent", { amount: 19.00 })
-      .then((res) => res.json())
+    // TODO(payments): backend returns 501 until payments are ported
+    apiRequest("POST", "/api/payments/create-payment-intent", { amount: 19.00 })
       .then((data) => {
         setClientSecret(data.clientSecret);
         setIsLoading(false);

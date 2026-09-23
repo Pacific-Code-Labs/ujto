@@ -70,6 +70,7 @@ export interface UserResponse {
   transcriptionsUsed?: number;
   isEmailVerified?: boolean;
   isPro?: boolean;
+  languagePreference?: string;
   isActive?: boolean;
   createdAt?: Date;
   updatedAt?: Date;

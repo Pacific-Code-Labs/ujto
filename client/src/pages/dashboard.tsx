@@ -5,7 +5,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "wouter";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { ApiError, createTranscription, listTranscriptions, queryKeys } from "@/lib/api";
+import type { Transcription } from "@/lib/api-types";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -28,25 +29,7 @@ import { LanguageToggle } from "@/components/LanguageToggle";
 import { NotificationDropdown } from "@/components/NotificationDropdown";
 import { SiYoutube, SiVimeo } from "react-icons/si";
 
-interface Transcription {
-  id: string;
-  videoUrl: string;
-  videoTitle?: string;
-  transcript: string;
-  status: string;
-  duration: number;
-  wordCount: number;
-  processingTime: number;
-  accuracy: number;
-  createdAt: string;
-}
 
-interface TranscriptionHistoryResponse {
-  transcriptions: Transcription[];
-  total: number;
-  page: number;
-  limit: number;
-}
 
 export default function Dashboard() {
   const [, navigate] = useLocation();
@@ -118,24 +101,20 @@ export default function Dashboard() {
     isLoading: transcriptionsLoading,
     isFetching,
     refetch: refetchTranscriptions,
-  } = useQuery<TranscriptionHistoryResponse>({
-    queryKey: ["/api/users", user?.id, "transcriptions"],
+  } = useQuery({
+    queryKey: queryKeys.transcriptions(user?.id),
+    queryFn: () => listTranscriptions(user!.id),
     enabled: isAuthenticated && !authLoading && !!user?.id,
-    retry: (failureCount, error) => {
-      // Don't retry on authentication errors
-      if (error && error.message && error.message.includes("401")) {
-        return false;
-      }
-      return failureCount < 3;
-    },
-    refetchInterval: (data: any) => {
-      // Auto-refresh every 5 seconds if there are processing transcriptions
-      const hasProcessing = data?.transcriptions?.some(
-        (t: Transcription) =>
-          t.status === "processing" || t.status === "pending",
-      );
-      return hasProcessing ? 5000 : 10000; // Poll every 10 seconds for demonstration
-    },
+    retry: (failureCount, error) =>
+      !(error instanceof ApiError && (error.status === 401 || error.status === 403)) &&
+      failureCount < 3,
+    // Poll while any job is still running
+    refetchInterval: (query) =>
+      query.state.data?.transcriptions?.some(
+        (t) => t.status === "processing" || t.status === "pending",
+      )
+        ? 5000
+        : false,
     staleTime: 0, // Always consider data stale
     gcTime: 0, // Don't cache
     refetchOnMount: true,
@@ -251,30 +230,20 @@ export default function Dashboard() {
 
     try {
       // Create transcription record and queue for processing
-      const createResponse = await apiRequest(
-        "POST",
-        `/api/users/${user?.id}/transcriptions`,
-        {
-          videoUrl: videoUrl.trim(),
-        },
-      );
-
-      const responseData = await createResponse.json();
+      const created = await createTranscription(user!.id, videoUrl.trim());
 
       toast({
         title: t("transcription.queued.title"),
         description: t("transcription.queued.description").replace(
           "{{title}}",
-          responseData.videoTitle || videoUrl.trim(),
+          created.videoTitle || videoUrl.trim(),
         ),
       });
 
       // Clear form and refresh data
       setVideoUrl("");
-      queryClient.invalidateQueries({
-        queryKey: ["/api/users", user?.id, "transcriptions"],
-      });
-      queryClient.invalidateQueries({ queryKey: ["/api/auth/me"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.transcriptions(user?.id) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.profile });
     } catch (error: any) {
       console.error("Transcription creation error:", error);
       toast({
