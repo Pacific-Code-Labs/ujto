@@ -1,0 +1,25 @@
+{
+  "newTranscription": "New Transcription",
+  "enterVideoUrl": "Enter a video URL to start transcribing",
+  "videoUrl": "Video URL",
+  "videoUrlPlaceholder": "https://www.youtube.com/watch?v=...",
+  "processing": "Processing...",
+  "success": {
+    "title": "Transcription Complete",
+    "description": "Your video has been transcribed successfully!"
+  },
+  "error": {
+    "title": "Transcription Failed",
+    "description": "There was an error processing your video. Please try again."
+  },
+  "status": {
+    "processing": "Processing",
+    "completed": "Completed",
+    "failed": "Failed"
+  },
+  "words": "words",
+  "queued": {
+    "title": "Transcription Queued",
+    "description": "Your video \"{{title}}\" has been queued for processing. You'll see the results here soon."
+  }
+}

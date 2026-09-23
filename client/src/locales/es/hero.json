@@ -1,0 +1,9 @@
+{
+  "title": "Convierte Videos a Texto",
+  "subtitle": "en Segundos",
+  "description": "Potente servicio de transcripción de video impulsado por IA. Sube cualquier URL de video y obtén transcripciones precisas al instante. Perfecto para creadores de contenido, estudiantes y profesionales.",
+  "placeholder": "Pega la URL de tu video aquí (YouTube, Vimeo, etc.)",
+  "transcribe": "Transcribir",
+  "processing": "Procesando...",
+  "remaining": "transcripciones por día (nivel gratuito)"
+}

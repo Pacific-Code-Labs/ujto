@@ -23,6 +23,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public render() {
+    const es = typeof window !== 'undefined' && window.location.pathname.startsWith('/es');
     if (this.state.hasError) {
       return (
         <div style={{
@@ -32,11 +33,11 @@ export class ErrorBoundary extends Component<Props, State> {
           maxWidth: '600px',
           margin: '50px auto'
         }}>
-          <h1 style={{ color: '#dc2626' }}>Something went wrong</h1>
-          <p>The application encountered an error and couldn't load properly.</p>
+          <h1 style={{ color: '#dc2626' }}>{es ? 'Algo salió mal' : 'Something went wrong'}</h1>
+          <p>{es ? 'La aplicación encontró un error y no pudo cargarse correctamente.' : "The application encountered an error and couldn't load properly."}</p>
           <details style={{ marginTop: '20px', textAlign: 'left' }}>
             <summary style={{ cursor: 'pointer', marginBottom: '10px' }}>
-              Error Details
+              {es ? 'Detalles del error' : 'Error Details'}
             </summary>
             <pre style={{
               background: '#f3f4f6',

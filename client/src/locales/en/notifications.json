@@ -1,0 +1,28 @@
+{
+  "title": "Notifications",
+  "markAllRead": "Mark all as read",
+  "empty": "No notifications",
+  "emptyDescription": "You're all caught up! New notifications will appear here.",
+  "transcriptionCompleted": "Transcription Completed",
+  "transcriptionFailed": "Transcription Failed",
+  "system": "System Notification",
+  "timeAgo": {
+    "justNow": "Just now",
+    "minutesAgo": "{minutes} minutes ago",
+    "hoursAgo": "{hours} hours ago",
+    "daysAgo": "{days} days ago"
+  },
+  "unreadCount": "{count} unread notifications",
+  "completed": {
+    "title": "Transcription Completed!",
+    "description": "Your video \"{{title}}\" has been successfully transcribed and is ready to view."
+  },
+  "failed": {
+    "title": "Transcription Failed",
+    "description": "We couldn't process your video \"{{title}}\". Please try again."
+  },
+  "processing": {
+    "title": "Processing Started",
+    "description": "Your video \"{{title}}\" is now being transcribed."
+  }
+}

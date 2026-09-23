@@ -21,7 +21,8 @@ async function authHeader(forceRefresh = false): Promise<Record<string, string>>
   }
 }
 
-export async function apiFetch<T>(method: string, path: string, body?: unknown): Promise<T> {
+/** Authenticated request returning the raw Response (refreshes the ID token once on 401). */
+async function authorizedFetch(method: string, path: string, body?: unknown): Promise<Response> {
   const send = async (forceRefresh: boolean) =>
     fetch(`${API_BASE_URL}${path}`, {
       method,
@@ -34,15 +35,24 @@ export async function apiFetch<T>(method: string, path: string, body?: unknown):
 
   let res = await send(false);
   if (res.status === 401) res = await send(true); // expired ID token: refresh once
+  return res;
+}
+
+async function toApiError(res: Response): Promise<ApiError> {
+  let message = res.statusText;
+  try {
+    const data = await res.json();
+    message = typeof data.detail === "string" ? data.detail : JSON.stringify(data.detail ?? data);
+  } catch {
+    /* non-JSON error body */
+  }
+  return new ApiError(res.status, message || `HTTP ${res.status}`);
+}
+
+export async function apiFetch<T>(method: string, path: string, body?: unknown): Promise<T> {
+  const res = await authorizedFetch(method, path, body);
   if (!res.ok) {
-    let message = res.statusText;
-    try {
-      const data = await res.json();
-      message = typeof data.detail === "string" ? data.detail : JSON.stringify(data.detail ?? data);
-    } catch {
-      /* non-JSON error body */
-    }
-    throw new ApiError(res.status, message || `HTTP ${res.status}`);
+    throw await toApiError(res);
   }
   return (res.status === 204 ? undefined : await res.json()) as T;
 }
@@ -205,8 +215,67 @@ export const markNotificationRead = (userId: string, id: string) =>
 export const markAllNotificationsRead = (userId: string) =>
   apiFetch<{ updated: number }>("PATCH", `${u(userId)}/notifications/mark-all-read`);
 
+// ---- Plan usage ----
+export type DownloadFormat = "txt" | "srt" | "vtt";
+
+export interface Usage {
+  plan: "free" | "pro" | string;
+  dailyLimit: number | null; // null = unlimited
+  usedToday: number;
+  remainingToday: number | null; // null = unlimited
+  resetsAt: string;
+  maxVideoSeconds: number;
+  downloadFormats: DownloadFormat[];
+  priorityProcessing: boolean;
+  emailSupport: boolean;
+}
+
+interface UsageDto {
+  plan: string;
+  daily_limit: number | null;
+  used_today: number;
+  remaining_today: number | null;
+  resets_at: string;
+  max_video_seconds: number;
+  download_formats: DownloadFormat[];
+  priority_processing: boolean;
+  email_support: boolean;
+}
+
+export async function getUsage(userId: string): Promise<Usage> {
+  const d = await apiFetch<UsageDto>("GET", `${u(userId)}/usage`);
+  return {
+    plan: d.plan,
+    dailyLimit: d.daily_limit,
+    usedToday: d.used_today,
+    remainingToday: d.remaining_today,
+    resetsAt: d.resets_at,
+    maxVideoSeconds: d.max_video_seconds,
+    downloadFormats: d.download_formats,
+    priorityProcessing: d.priority_processing,
+    emailSupport: d.email_support,
+  };
+}
+
+/** Download a transcription in the given format (the API enforces plan access) and save it. */
+export async function downloadTranscription(userId: string, id: string, format: DownloadFormat): Promise<void> {
+  const res = await authorizedFetch("GET", `${u(userId)}/transcriptions/${id}/download?format=${format}`);
+  if (!res.ok) throw await toApiError(res);
+  const disposition = res.headers.get("Content-Disposition") || "";
+  const filename = /filename="([^"]+)"/.exec(disposition)?.[1] || `transcription-${id}.${format}`;
+  const url = URL.createObjectURL(await res.blob());
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
 // ---- Query keys (shared so invalidations match) ----
 export const queryKeys = {
+  usage: (userId?: string) => ["usage", userId] as const,
   profile: ["profile"] as const,
   transcriptions: (userId?: string) => ["transcriptions", userId] as const,
   notifications: (userId?: string) => ["notifications", userId] as const,

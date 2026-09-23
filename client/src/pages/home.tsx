@@ -456,7 +456,7 @@ export default function Home() {
             {/* Pro Tier - Coming Soon */}
             <Card className="pricing-card border-2 border-gray-300 dark:border-gray-600 relative bg-white dark:bg-gray-800 flex flex-col opacity-75">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-gray-500 text-white">Coming Soon</Badge>
+                <Badge className="bg-gray-500 text-white">{t("common.comingSoon")}</Badge>
               </div>
               <CardContent className="p-8 flex-grow flex flex-col">
                 <div className="text-center mb-8">

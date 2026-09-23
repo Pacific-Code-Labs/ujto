@@ -1,6 +1,7 @@
 import React from 'react';
 import { CheckCircle, XCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface PasswordRule {
   test: (password: string) => boolean;
@@ -8,11 +9,11 @@ interface PasswordRule {
 }
 
 const passwordRules: PasswordRule[] = [
-  { test: (pwd) => pwd.length >= 8, message: 'At least 8 characters' },
-  { test: (pwd) => /[a-z]/.test(pwd), message: 'One lowercase letter' },
-  { test: (pwd) => /[A-Z]/.test(pwd), message: 'One uppercase letter' },
-  { test: (pwd) => /[0-9]/.test(pwd), message: 'One number' },
-  { test: (pwd) => /[^a-zA-Z0-9]/.test(pwd), message: 'One special character' },
+  { test: (pwd) => pwd.length >= 8, message: 'password.rule.length' },
+  { test: (pwd) => /[a-z]/.test(pwd), message: 'password.rule.lower' },
+  { test: (pwd) => /[A-Z]/.test(pwd), message: 'password.rule.upper' },
+  { test: (pwd) => /[0-9]/.test(pwd), message: 'password.rule.number' },
+  { test: (pwd) => /[^a-zA-Z0-9]/.test(pwd), message: 'password.rule.special' },
 ];
 
 interface PasswordStrengthIndicatorProps {
@@ -21,6 +22,7 @@ interface PasswordStrengthIndicatorProps {
 }
 
 export function PasswordStrengthIndicator({ password, className }: PasswordStrengthIndicatorProps) {
+  const { t } = useLanguage();
   const passedRules = passwordRules.filter(rule => rule.test(password));
   const strength = passedRules.length;
   
@@ -43,7 +45,7 @@ export function PasswordStrengthIndicator({ password, className }: PasswordStren
       {/* Strength Bar */}
       <div className="space-y-1">
         <div className="flex justify-between text-sm">
-          <span className="text-muted-foreground">Password Strength</span>
+          <span className="text-muted-foreground">{t("password.strength")}</span>
           <span className={cn(
             "font-medium",
             strength === 0 && "text-gray-500",
@@ -82,7 +84,7 @@ export function PasswordStrengthIndicator({ password, className }: PasswordStren
                 "transition-colors",
                 isValid ? "text-green-600 dark:text-green-400" : "text-muted-foreground"
               )}>
-                {rule.message}
+                {t(rule.message)}
               </span>
             </div>
           );

@@ -1,0 +1,29 @@
+{
+  "title": "Profile",
+  "description": "Manage your account information and preferences.",
+  "verified": "Verified",
+  "plan": "Plan",
+  "memberSince": "Member since",
+  "transcriptionsUsed": "transcriptions used",
+  "edit": {
+    "title": "Edit Profile",
+    "description": "Update your profile information. Note: Email cannot be changed.",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "firstName": "First Name",
+    "firstNamePlaceholder": "Enter your first name",
+    "lastName": "Last Name",
+    "lastNamePlaceholder": "Enter your last name",
+    "emailNote": "Email cannot be changed",
+    "submit": "Update Profile"
+  },
+  "update": {
+    "success": {
+      "title": "Profile Updated",
+      "description": "Your profile has been updated successfully."
+    },
+    "error": "Failed to update profile"
+  },
+  "editProfile": "Edit Profile",
+  "loginRequired": "Please log in to view your profile."
+}

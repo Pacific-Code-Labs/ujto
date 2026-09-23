@@ -1,0 +1,19 @@
+{
+  "title": "Trusted by Content Creators Worldwide",
+  "subtitle": "Join thousands of satisfied users who rely on VideoScript for their transcription needs.",
+  "sarah": {
+    "text": "VideoScript has revolutionized my content creation workflow. The accuracy is incredible and it saves me hours of manual transcription work every week.",
+    "name": "Sarah Johnson",
+    "role": "YouTube Creator"
+  },
+  "mike": {
+    "text": "As a student, VideoScript helps me convert lecture videos to text for better studying. The free tier is perfect for my needs.",
+    "name": "Mike Chen",
+    "role": "University Student"
+  },
+  "lisa": {
+    "text": "The accuracy and speed are unmatched. We use VideoScript for all our corporate training materials and the results are consistently excellent.",
+    "name": "Lisa Rodriguez",
+    "role": "Training Manager"
+  }
+}

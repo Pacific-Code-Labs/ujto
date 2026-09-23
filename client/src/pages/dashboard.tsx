@@ -306,7 +306,7 @@ export default function Dashboard() {
       <div className="min-h-screen flex items-center justify-center">
         <div
           className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"
-          aria-label="Loading"
+          aria-label={t("common.loading")}
         />
       </div>
     );
@@ -545,7 +545,7 @@ export default function Dashboard() {
                   <div className="text-center py-8">
                     <Icons.fileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                     <p className="text-gray-600 dark:text-gray-400">
-                      {t("history.empty")}
+                      {t("history.empty.title")}
                     </p>
                     <Button
                       className="mt-4"
@@ -597,14 +597,12 @@ export default function Dashboard() {
                           {!transcription.transcript &&
                             transcription.status === "processing" && (
                               <p className="text-sm text-yellow-600 dark:text-yellow-400 italic mb-3">
-                                Your transcription is being processed. This may
-                                take a few minutes...
+                                {t("history.processingDesc")}
                               </p>
                             )}
                           {transcription.status === "failed" && (
                             <p className="text-sm text-red-600 dark:text-red-400 italic mb-3">
-                              Transcription failed. Please try again with a
-                              different video.
+                              {transcription.errorMessage?.toLowerCase().includes("too long") ? t("messages.videoTooLong") : t("history.failedDesc")}
                             </p>
                           )}
 

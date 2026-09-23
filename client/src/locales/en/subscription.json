@@ -1,0 +1,16 @@
+{
+  "title": "Subscribe to VideoScript Pro",
+  "planTitle": "Pro Plan",
+  "month": "/month",
+  "setupComplete": "Complete Your Subscription",
+  "setupError": "Subscription Setup Error",
+  "setupErrorDesc": "Could not set up subscription. Please try again.",
+  "welcomePro": "Welcome to Pro!",
+  "activeDesc": "Your subscription is now active. Enjoy unlimited transcriptions and premium features.",
+  "startTranscribing": "Start Transcribing",
+  "processing": "Processing...",
+  "subscribeNow": "Subscribe Now",
+  "tryAgain": "Try Again",
+  "subscriptionFor": "Subscription for",
+  "sslSecured": "Secured by 256-bit SSL encryption"
+}

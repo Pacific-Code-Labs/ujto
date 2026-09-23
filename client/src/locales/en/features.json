@@ -1,0 +1,16 @@
+{
+  "title": "Why Choose VideoScript?",
+  "subtitle": "Experience the fastest, most accurate video transcription service powered by advanced AI technology.",
+  "fast": {
+    "title": "Lightning Fast",
+    "desc": "Get your video transcriptions in seconds, not minutes. Our optimized AI processes videos up to 10x faster than competitors with instant access to your complete transcription history."
+  },
+  "accurate": {
+    "title": "99% Accuracy",
+    "desc": "Industry-leading accuracy with support for multiple languages and accents. Perfect transcriptions every time, all saved in your personal history dashboard."
+  },
+  "secure": {
+    "title": "Complete History",
+    "desc": "Access all your transcriptions anytime with our comprehensive history tracking. Search, organize, and manage your video transcripts with intelligent video title extraction."
+  }
+}

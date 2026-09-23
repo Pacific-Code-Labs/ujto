@@ -148,11 +148,11 @@ export default function TranscriptionSidebar({
       await navigator.clipboard.writeText(transcript);
       toast({
         title: t("messages.copied"),
-        description: "Transcription copied to clipboard",
+        description: t("messages.copied"),
       });
     } catch (error) {
       toast({
-        title: "Error",
+        title: t("common.error"),
         description: t("messages.copyFailed"),
         variant: "destructive",
       });
@@ -169,7 +169,7 @@ export default function TranscriptionSidebar({
     URL.revokeObjectURL(url);
 
     toast({
-      title: "Downloaded",
+      title: t("messages.downloadTitle"),
       description: t("messages.downloadStarted"),
     });
   };
@@ -242,7 +242,7 @@ export default function TranscriptionSidebar({
           <div className="text-center">
             <FileText className="mx-auto h-12 w-12 text-gray-400 mb-4" />
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              {t("history.empty")}
+              {t("history.empty.title")}
             </h3>
             <p className="text-gray-600 dark:text-gray-400">
               {t("history.empty.description")}
@@ -290,14 +290,12 @@ export default function TranscriptionSidebar({
                   {!transcription.transcript &&
                     transcription.status === "processing" && (
                       <p className="text-sm text-yellow-600 dark:text-yellow-400 italic">
-                        Your transcription is being processed. This may take a
-                        few minutes...
+                        {t("history.processingDesc")}
                       </p>
                     )}
                   {transcription.status === "failed" && (
                     <p className="text-sm text-red-600 dark:text-red-400 italic">
-                      Transcription failed. Please try again with a different
-                      video.
+                      {transcription.errorMessage?.toLowerCase().includes("too long") ? t("messages.videoTooLong") : t("history.failedDesc")}
                     </p>
                   )}
                   <div className="flex items-center justify-between">

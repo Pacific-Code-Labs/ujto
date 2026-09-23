@@ -1,0 +1,20 @@
+{
+  "title": "Elige Método de Pago",
+  "plan": "Plan",
+  "description": "Suscripción mensual para transcripciones ilimitadas",
+  "stripe": "Pagar con Stripe",
+  "paypal": "PayPal",
+  "secure": "Asegurado con encriptación SSL de 256 bits",
+  "failed": "Pago fallido",
+  "success": "Pago exitoso",
+  "successTitle": "¡Pago exitoso!",
+  "thanks": "¡Gracias por tu compra!",
+  "successDesc": "Gracias por tu compra. Ahora puedes disfrutar de transcripciones ilimitadas.",
+  "settingUp": "Preparando el pago...",
+  "setupErrorTitle": "Error al preparar el pago",
+  "setupErrorDesc": "No se pudo preparar el pago. Inténtalo de nuevo.",
+  "oneTime": "Pago único por las funciones Pro",
+  "paypalUnavailable": "PayPal no está disponible temporalmente",
+  "payWithPaypal": "Pagar con PayPal",
+  "completePurchase": "Completa tu compra"
+}

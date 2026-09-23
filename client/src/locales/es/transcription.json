@@ -1,0 +1,25 @@
+{
+  "newTranscription": "Nueva Transcripción",
+  "enterVideoUrl": "Ingresa una URL de video para comenzar a transcribir",
+  "videoUrl": "URL del Video",
+  "videoUrlPlaceholder": "https://www.youtube.com/watch?v=...",
+  "processing": "Procesando...",
+  "success": {
+    "title": "Transcripción Completa",
+    "description": "¡Tu video ha sido transcrito exitosamente!"
+  },
+  "error": {
+    "title": "Error en Transcripción",
+    "description": "Hubo un error procesando tu video. Por favor, inténtalo de nuevo."
+  },
+  "status": {
+    "processing": "Procesando",
+    "completed": "Completado",
+    "failed": "Fallido"
+  },
+  "words": "palabras",
+  "queued": {
+    "title": "Transcripción en Cola",
+    "description": "Tu video \"{{title}}\" ha sido puesto en cola para procesamiento. Verás los resultados aquí pronto."
+  }
+}

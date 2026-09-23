@@ -9,6 +9,7 @@
 import React, { useEffect } from "react";
 import { API_BASE_URL } from "@/lib/config";
 import { apiFetch } from "@/lib/api";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 declare global {
   namespace JSX {
@@ -32,6 +33,7 @@ export default function PayPalButton({
   currency,
   intent,
 }: PayPalButtonProps) {
+  const { t } = useLanguage();
   const createOrder = async () => {
     const orderPayload = {
       amount: amount,
@@ -171,7 +173,7 @@ export default function PayPalButton({
       // Show user-friendly error
       const paypalButton = document.getElementById("paypal-button");
       if (paypalButton) {
-        paypalButton.innerHTML = '<div style="padding: 10px; background: #f44336; color: white; border-radius: 4px; text-align: center;">PayPal temporarily unavailable</div>';
+        paypalButton.innerHTML = '<div style="padding: 10px; background: #f44336; color: white; border-radius: 4px; text-align: center;">{t("payment.paypalUnavailable")}</div>';
       }
     }
   };
@@ -193,7 +195,7 @@ export default function PayPalButton({
       textAlign: 'center' as const
     }}
   >
-    Pay with PayPal
+    {t("payment.payWithPaypal")}
   </paypal-button>;
 }
 // <END_EXACT_CODE>

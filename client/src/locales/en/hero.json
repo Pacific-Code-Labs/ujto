@@ -1,0 +1,9 @@
+{
+  "title": "Transform Videos to Text",
+  "subtitle": "in Seconds",
+  "description": "Powerful AI-driven video transcription service. Upload any video URL and get accurate transcripts instantly. Perfect for content creators, students, and professionals.",
+  "placeholder": "Paste your video URL here (YouTube, Vimeo, etc.)",
+  "transcribe": "Transcribe",
+  "processing": "Processing...",
+  "remaining": "transcriptions per day (free tier)"
+}

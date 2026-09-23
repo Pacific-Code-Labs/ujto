@@ -14,11 +14,11 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { Eye, EyeOff } from "lucide-react";
 
 const resetPasswordSchema = z.object({
-  code: z.string().regex(/^\d{6}$/, "Enter the 6-digit code from your email"),
-  newPassword: z.string().min(8, "Password must be at least 8 characters"),
-  confirmPassword: z.string().min(8, "Password must be at least 8 characters"),
+  code: z.string().regex(/^\d{6}$/, "validation.resetCode"),
+  newPassword: z.string().min(8, "validation.passwordMin"),
+  confirmPassword: z.string().min(8, "validation.passwordMin"),
 }).refine((data) => data.newPassword === data.confirmPassword, {
-  message: "Passwords don't match",
+  message: "validation.passwordsMismatch",
   path: ["confirmPassword"],
 });
 
@@ -63,7 +63,7 @@ export default function ResetPassword() {
   const resetPasswordMutation = useMutation({
     mutationFn: async (data: ResetPasswordForm) => {
       if (!email) {
-        throw new Error("Email is missing from the reset link");
+        throw new Error(t("auth.reset.invalidLink"));
       }
       return confirmResetPassword({
         username: email,
@@ -165,7 +165,7 @@ export default function ResetPassword() {
                 className={form.formState.errors.code ? "border-red-500" : ""}
               />
               {form.formState.errors.code && (
-                <p className="text-sm text-red-500">{form.formState.errors.code.message}</p>
+                <p className="text-sm text-red-500">{t(String(form.formState.errors.code.message ?? ""))}</p>
               )}
             </div>
 
@@ -196,7 +196,7 @@ export default function ResetPassword() {
               </div>
               {form.formState.errors.newPassword && (
                 <p className="text-sm text-red-500">
-                  {form.formState.errors.newPassword.message}
+                  {t(String(form.formState.errors.newPassword.message ?? ""))}
                 </p>
               )}
             </div>
@@ -228,7 +228,7 @@ export default function ResetPassword() {
               </div>
               {form.formState.errors.confirmPassword && (
                 <p className="text-sm text-red-500">
-                  {form.formState.errors.confirmPassword.message}
+                  {t(String(form.formState.errors.confirmPassword.message ?? ""))}
                 </p>
               )}
             </div>

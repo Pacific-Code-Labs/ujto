@@ -25,7 +25,7 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { LogOut } from 'lucide-react';
 
 const verifyEmailSchema = z.object({
-  code: z.string().length(6, 'Verification code must be 6 digits'),
+  code: z.string().length(6, 'validation.verificationCode'),
 });
 
 type VerifyEmailForm = z.infer<typeof verifyEmailSchema>;

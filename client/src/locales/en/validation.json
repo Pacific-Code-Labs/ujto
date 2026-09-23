@@ -1,0 +1,16 @@
+{
+  "emailInvalid": "Please enter a valid email address",
+  "passwordRequired": "Password is required",
+  "resetCode": "Enter the 6-digit code from your email",
+  "verificationCode": "Verification code must be 6 digits",
+  "passwordMin": "Password must be at least 8 characters",
+  "passwordLower": "Password must contain at least one lowercase letter",
+  "passwordUpper": "Password must contain at least one uppercase letter",
+  "passwordNumber": "Password must contain at least one number",
+  "passwordSpecial": "Password must contain at least one special character",
+  "passwordsMismatch": "Passwords don't match",
+  "firstNameRequired": "First name is required",
+  "lastNameRequired": "Last name is required",
+  "usernameMin": "Username must be at least 3 characters",
+  "usernameMax": "Username must be less than 20 characters"
+}

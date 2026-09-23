@@ -1,0 +1,13 @@
+{
+  "welcomeBack": "¡Bienvenido de nuevo, {{name}}!",
+  "description": "Gestiona tus transcripciones y configuración de cuenta",
+  "accountOverview": "Resumen de Cuenta",
+  "plan": "Plan",
+  "free": "Gratuito",
+  "pro": "Pro",
+  "upgrade": "Actualizar",
+  "dailyUsage": "Uso Diario",
+  "dailyLimitReached": "Límite diario alcanzado",
+  "totalTranscriptions": "Transcripciones Totales",
+  "memberSince": "Miembro Desde"
+}
