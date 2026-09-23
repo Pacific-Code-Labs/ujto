@@ -13,13 +13,12 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useAuth } from '@/hooks/useAuth';
-import { apiRequest } from '@/lib/queryClient';
-import type { Notification } from '@shared/schema';
-
-interface NotificationResponse {
-  notifications: Notification[];
-  unreadCount: number;
-}
+import {
+  listNotifications,
+  markAllNotificationsRead,
+  markNotificationRead,
+  queryKeys,
+} from '@/lib/api';
 
 export function NotificationDropdown() {
   const { t } = useLanguage();
@@ -28,8 +27,9 @@ export function NotificationDropdown() {
   const [isOpen, setIsOpen] = useState(false);
 
   // Fetch notifications
-  const { data: notificationData, isLoading } = useQuery<NotificationResponse>({
-    queryKey: ['/api/users', user?.id, 'notifications'],
+  const { data: notificationData, isLoading } = useQuery({
+    queryKey: queryKeys.notifications(user?.id),
+    queryFn: () => listNotifications(user!.id),
     enabled: !!user?.id,
     refetchInterval: 30000, // Refetch every 30 seconds for real-time updates
   });
@@ -37,20 +37,20 @@ export function NotificationDropdown() {
   // Mark single notification as read
   const markAsReadMutation = useMutation({
     mutationFn: async (notificationId: string) => {
-      return await apiRequest('PATCH', `/api/users/${user?.id}/notifications/${notificationId}/read`);
+      return await markNotificationRead(user!.id, notificationId);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/users', user?.id, 'notifications'] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.notifications(user?.id) });
     },
   });
 
   // Mark all notifications as read
   const markAllAsReadMutation = useMutation({
     mutationFn: async () => {
-      return await apiRequest('PATCH', `/api/users/${user?.id}/notifications/mark-all-read`);
+      return await markAllNotificationsRead(user!.id);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/users', user?.id, 'notifications'] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.notifications(user?.id) });
     },
   });
 

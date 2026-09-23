@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Play, Gift, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { queryClient } from "@/lib/queryClient";
+import { createTranscription, queryKeys } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/hooks/useAuth";
@@ -81,21 +82,19 @@ export default function VideoTranscriptionForm({
     setProcessingStatus(t('hero.processing'));
     
     try {
-      // Use new SQS-based endpoint to queue transcription
-      const response = await apiRequest('POST', `/api/users/${user?.id}/transcriptions`, {
-        videoUrl: videoUrl.trim(),
-      });
+      if (!user?.id) {
+        onLoginRequired(videoUrl);
+        return;
+      }
+      const created = await createTranscription(user.id, videoUrl.trim());
 
-      const createResponse = await response.json();
-
-      // Invalidate transcriptions cache to refresh sidebar/modal
-      await queryClient.invalidateQueries({ 
-        queryKey: ["/api/users", user?.id, "transcriptions"] 
-      });
+      // Refresh the sidebar/dashboard list and the usage counter
+      await queryClient.invalidateQueries({ queryKey: queryKeys.transcriptions(user.id) });
+      await queryClient.invalidateQueries({ queryKey: queryKeys.profile });
 
       toast({
         title: t('transcription.queued.title'),
-        description: t('transcription.queued.description').replace('{{title}}', createResponse.videoTitle),
+        description: t('transcription.queued.description').replace('{{title}}', created.videoTitle || 'Video'),
       });
 
       setVideoUrl("");

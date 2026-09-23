@@ -1,35 +1,13 @@
-// API Configuration for different environments
-// Detect if we're in Replit environment (HTTPS)
-const isReplitEnv = window.location.hostname.includes('replit.dev');
-const isHttps = window.location.protocol === 'https:';
+// API configuration. VITE_* values come from SSM (/video-transcript/<env>/web) via
+// scripts/load-env-from-ssm.sh, locally and in the GitHub Pages build.
+const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL as string | undefined;
 
-const config = {
-  development: {
-    // In Replit, backend and frontend run on same port/origin
-    apiBaseUrl: (isHttps && isReplitEnv) ? 
-      `${window.location.protocol}//${window.location.host}` : 
-      'http://localhost:5000',
-  },
-  production: {
-    // Production API endpoint for GitHub Pages deployment
-    apiBaseUrl: 'https://api-video-transcript.jcampos.dev',
-  }
-};
+if (!configuredApiBaseUrl && import.meta.env.PROD) {
+  throw new Error('Missing VITE_API_BASE_URL. Load it from SSM with scripts/load-env-from-ssm.sh.');
+}
 
-// Detect environment properly for GitHub Pages deployment
-const environment = import.meta.env.MODE === 'production' ? 'production' : 'development';
-
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || config[environment].apiBaseUrl;
-
-// Debug logging
-console.log('API Config Debug:', {
-  hostname: window.location.hostname,
-  protocol: window.location.protocol,
-  isReplitEnv,
-  isHttps,
-  environment,
-  apiBaseUrl: API_BASE_URL
-});
+// Local default: the FastAPI dev server (be/api-be).
+export const API_BASE_URL = (configuredApiBaseUrl || 'http://localhost:8000').replace(/\/$/, '');
 
 // Base path configuration for GitHub Pages custom domain deployment
 export const BASE_PATH = '';

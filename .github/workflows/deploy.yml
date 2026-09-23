@@ -36,6 +36,15 @@ jobs:
         
     - name: Install dependencies
       run: npm ci
+
+    - name: Configure AWS credentials (read-only web config role)
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: ${{ secrets.AWS_WEB_BUILD_ROLE_ARN }}
+        aws-region: us-east-1
+
+    - name: Resolve build configuration from SSM
+      run: bash scripts/load-env-from-ssm.sh prod - --github-env
       
     - name: Build project  
       run: |
@@ -70,10 +79,6 @@ jobs:
         echo "=== 404.html Configuration Check ==="
         head -20 dist/gh-pages/404.html | grep pathSegmentsToKeep
       env:
-        VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
-        VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
-        VITE_AWS_COGNITO_USER_POOL_ID: ${{ secrets.VITE_AWS_COGNITO_USER_POOL_ID }}
-        VITE_AWS_COGNITO_CLIENT_ID: ${{ secrets.VITE_AWS_COGNITO_CLIENT_ID }}
         NODE_ENV: production
         
     - name: Setup Pages

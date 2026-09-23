@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { listTranscriptions, queryKeys } from "@/lib/api";
+import type { Transcription } from "@/lib/api-types";
 import {
   X,
   FileText,
@@ -29,18 +30,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { formatDistanceToNow } from "date-fns";
 
-interface Transcription {
-  id: string;
-  videoUrl: string;
-  videoTitle?: string;
-  transcript: string;
-  status: string;
-  duration: number;
-  wordCount: number;
-  processingTime: number;
-  accuracy: number;
-  createdAt: string;
-}
 
 interface TranscriptionSidebarProps {
   isOpen: boolean;
@@ -77,16 +66,17 @@ export default function TranscriptionSidebar({
     refetch,
     isFetching,
   } = useQuery({
-    queryKey: ["/api/users", user?.id, "transcriptions"],
+    queryKey: queryKeys.transcriptions(user?.id),
+    queryFn: () => listTranscriptions(user!.id),
     enabled: isAuthenticated && !!user?.id,
     retry: false,
-    refetchInterval: (data: any) => {
-      // Auto-refresh every 5 seconds if there are processing transcriptions
-      const hasProcessing = data?.transcriptions?.some(
-        (t: Transcription) => t.status === "processing",
-      );
-      return hasProcessing ? 5000 : false;
-    },
+    // Poll while any job is still running
+    refetchInterval: (query) =>
+      query.state.data?.transcriptions?.some(
+        (t) => t.status === "processing" || t.status === "pending",
+      )
+        ? 5000
+        : false,
   });
 
   // Refresh transcriptions when sidebar opens
@@ -100,9 +90,7 @@ export default function TranscriptionSidebar({
 
   const handleRefresh = async () => {
     // Invalidate cache and force refetch
-    await queryClient.invalidateQueries({ 
-      queryKey: ["/api/users", user?.id, "transcriptions"] 
-    });
+    await queryClient.invalidateQueries({ queryKey: queryKeys.transcriptions(user?.id) });
     await refetch();
     toast({
       title: t("transcriptions.refreshed"),

@@ -16,8 +16,8 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/hooks/useAuth";
 import { useEmailVerificationGuard } from "@/hooks/useEmailVerification";
 import { useLocation } from "wouter";
-import { apiRequest } from "@/lib/queryClient";
-import { transcribeVideo } from "@/lib/transcription-api";
+import { queryClient } from "@/lib/queryClient";
+import { createTranscription, queryKeys } from "@/lib/api";
 
 interface Transcription {
   id: string;
@@ -72,13 +72,13 @@ export default function Home() {
       // Auto-submit the pending URL for transcription via new SQS system
       const autoTranscribe = async () => {
         try {
-          const createResponse = await apiRequest('POST', '/api/transcriptions/create', {
-            videoUrl: pendingVideoUrl.trim(),
-          }) as { videoTitle?: string };
+          const created = await createTranscription(user!.id, pendingVideoUrl.trim());
+          queryClient.invalidateQueries({ queryKey: queryKeys.transcriptions(user!.id) });
+          queryClient.invalidateQueries({ queryKey: queryKeys.profile });
 
           toast({
             title: t('transcription.queued.title'),
-            description: t('transcription.queued.description').replace('{{title}}', createResponse.videoTitle || 'Video'),
+            description: t('transcription.queued.description').replace('{{title}}', created.videoTitle || 'Video'),
           });
 
           setPendingVideoUrl(""); // Clear pending URL
@@ -105,45 +105,7 @@ export default function Home() {
     setCurrentTranscription(transcription);
     setShowResults(true);
     
-    // Save transcription to database if authenticated
-    if (isAuthenticated) {
-      try {
-        // Get tokens and make authenticated request
-        const tokens = JSON.parse(localStorage.getItem('auth_tokens') || '{}');
-        if (tokens.accessToken) {
-          const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${tokens.accessToken}`
-          };
-
-          const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
-          const response = await fetch(`${baseUrl}/api/transcriptions`, {
-            method: 'POST',
-            headers,
-            body: JSON.stringify({
-              videoUrl: transcription.videoUrl || "Unknown URL",
-              transcript: transcription.transcript,
-              duration: Number(transcription.duration) || 0,
-              wordCount: Number(transcription.wordCount) || 0,
-              processingTime: Number(transcription.processingTime) || 0,
-              accuracy: Number(transcription.accuracy) || 0,
-            }),
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${await response.text()}`);
-          }
-          
-          console.log("Transcription saved to database successfully");
-        } else {
-          console.error("No access token found for saving transcription");
-        }
-      } catch (error) {
-        console.error("Failed to save transcription to database:", error);
-        // Don't show error to user as the transcription still works
-      }
-    } else {
-      // Only update localStorage if not authenticated
+    if (!isAuthenticated) {
       setTranscriptionsUsed(transcriptionsUsed + 1);
     }
     

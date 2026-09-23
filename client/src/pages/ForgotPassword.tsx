@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { resetPassword } from "aws-amplify/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const forgotPasswordSchema = z.object({
@@ -19,7 +19,8 @@ const forgotPasswordSchema = z.object({
 type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPassword() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const [, navigate] = useLocation();
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -32,12 +33,12 @@ export default function ForgotPassword() {
 
   const forgotPasswordMutation = useMutation({
     mutationFn: async (data: ForgotPasswordForm) => {
-      console.log("Sending forgot password request...");
-      return apiRequest("POST", "/api/auth/forgot-password", data);
+      // Cognito emails a 6-digit reset code
+      return resetPassword({ username: data.email });
     },
-    onSuccess: () => {
-      console.log("Forgot password request successful");
+    onSuccess: (_result, data) => {
       setIsSubmitted(true);
+      navigate(`/${language}/reset-password?email=${encodeURIComponent(data.email)}`);
       toast({
         title: t("auth.forgot.success.title"),
         description: t("auth.forgot.success.description"),
