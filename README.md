@@ -32,7 +32,7 @@ npm run dev                              # http://localhost:5173
 
 Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages (custom domain from `client/public/CNAME`).
 
-Build-time values (`VITE_*`) are read from AWS SSM Parameter Store at `/video-transcript/<env>/web/*` by `scripts/load-env-from-ssm.sh`, both locally and in the Pages workflow. The workflow assumes a read-only role through GitHub OIDC; its ARN is the only repository secret (`AWS_WEB_BUILD_ROLE_ARN`). These values ship to the browser, so they are public identifiers — never store secret keys under that path.
+Build-time values (`VITE_*`) are read from AWS SSM Parameter Store at `/ujto/<env>/web/*` by `scripts/load-env-from-ssm.sh`, both locally and in the Pages workflow. The workflow assumes a read-only role through GitHub OIDC; its ARN is the only repository secret (`AWS_WEB_BUILD_ROLE_ARN`). These values ship to the browser, so they are public identifiers — never store secret keys under that path.
 
 Without AWS access, copy `.env.example` to `.env.local` and fill it in by hand.
 
