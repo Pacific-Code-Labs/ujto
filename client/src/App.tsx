@@ -24,7 +24,7 @@ console.log('📦 App components loaded');
 
 function RouterWithLanguage() {
   const [location, setLocation] = useLocation();
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
@@ -92,7 +92,7 @@ function RouterWithLanguage() {
   if (!isInitialized) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" aria-label="Loading"/>
+        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" aria-label={t("common.loading")}/>
       </div>
     );
   }

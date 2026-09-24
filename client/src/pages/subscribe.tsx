@@ -211,7 +211,7 @@ export default function Subscribe() {
                   {isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      t('messages.settingUp')
+                      {t('messages.settingUp')}
                     </>
                   ) : (
                     t('form.continue')
@@ -260,7 +260,7 @@ export default function Subscribe() {
           className="mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          {t("common.back")}
         </Button>
 
         <Card>
@@ -284,7 +284,7 @@ export default function Subscribe() {
         <div className="text-center mt-6">
           <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center">
             <Lock className="mr-2 h-4 w-4" />
-            t('subscription.sslSecured')
+            {t('subscription.sslSecured')}
           </p>
         </div>
       </div>

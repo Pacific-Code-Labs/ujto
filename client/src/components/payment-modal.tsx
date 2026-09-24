@@ -44,8 +44,8 @@ export default function PaymentModal({ isOpen, onClose, planType }: PaymentModal
         
         <div className="space-y-6">
           <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-            <h4 className="font-semibold text-gray-900 dark:text-white">{plan.name} Plan</h4>
-            <p className="text-2xl font-bold text-primary">${plan.price}/month</p>
+            <h4 className="font-semibold text-gray-900 dark:text-white">{t("payment.planName").replace("{name}", plan.name)}</h4>
+            <p className="text-2xl font-bold text-primary">${plan.price}{t("payment.perMonth")}</p>
             <p className="text-sm text-gray-600 dark:text-gray-300">{plan.description}</p>
           </div>
           
@@ -86,7 +86,7 @@ export default function PaymentModal({ isOpen, onClose, planType }: PaymentModal
           <div className="text-center">
             <p className="text-sm text-gray-500 dark:text-gray-400 flex items-center justify-center">
               <Lock className="mr-1 h-4 w-4" />
-              Secured by 256-bit SSL encryption
+              {t("subscription.sslSecured")}
             </p>
           </div>
         </div>

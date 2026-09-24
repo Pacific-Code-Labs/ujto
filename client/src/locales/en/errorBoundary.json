@@ -1,0 +1,6 @@
+{
+  "title": "Something went wrong",
+  "description": "The application encountered an error and couldn't load properly.",
+  "details": "Error Details",
+  "reload": "Reload Page"
+}

@@ -82,7 +82,7 @@ const CheckoutForm = () => {
         {isProcessing ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Processing...
+            {t("status.processing")}
           </>
         ) : (
           'Complete Payment'
@@ -173,7 +173,7 @@ export default function Checkout() {
         <div className="text-center mt-6">
           <p className="text-sm text-gray-500 flex items-center justify-center">
             <i className="fas fa-lock mr-1"></i>
-            Secured by 256-bit SSL encryption
+            {t("subscription.sslSecured")}
           </p>
         </div>
       </div>

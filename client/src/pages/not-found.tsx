@@ -35,7 +35,7 @@ export default function NotFound() {
               href={isGitHubPages ? '/video-transcript/' : '/'}
               className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
             >
-              Go Home
+              {t("notFound.goHome")}
             </a>
           </div>
         </CardContent>

@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
+import { translations } from "@/i18n";
 
 interface Props {
   children: ReactNode;
@@ -23,7 +24,8 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public render() {
-    const es = typeof window !== 'undefined' && window.location.pathname.startsWith('/es');
+    const lang = typeof window !== 'undefined' && window.location.pathname.startsWith('/es') ? 'es' : 'en';
+    const tr = (key: string) => translations[lang][`errorBoundary.${key}`] ?? key;
     if (this.state.hasError) {
       return (
         <div style={{
@@ -33,11 +35,11 @@ export class ErrorBoundary extends Component<Props, State> {
           maxWidth: '600px',
           margin: '50px auto'
         }}>
-          <h1 style={{ color: '#dc2626' }}>{es ? 'Algo salió mal' : 'Something went wrong'}</h1>
-          <p>{es ? 'La aplicación encontró un error y no pudo cargarse correctamente.' : "The application encountered an error and couldn't load properly."}</p>
+          <h1 style={{ color: '#dc2626' }}>{tr('title')}</h1>
+          <p>{tr('description')}</p>
           <details style={{ marginTop: '20px', textAlign: 'left' }}>
             <summary style={{ cursor: 'pointer', marginBottom: '10px' }}>
-              {es ? 'Detalles del error' : 'Error Details'}
+              {tr('details')}
             </summary>
             <pre style={{
               background: '#f3f4f6',
@@ -63,7 +65,7 @@ export class ErrorBoundary extends Component<Props, State> {
               cursor: 'pointer'
             }}
           >
-            Reload Page
+            {tr('reload')}
           </button>
         </div>
       );
