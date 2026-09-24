@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import PayPalButton from "./PayPalButton";
 import { useLocation } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { PRO_PRICE_USD, formatUsd } from "@/lib/plans";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -19,7 +20,7 @@ export default function PaymentModal({ isOpen, onClose, planType }: PaymentModal
   const planDetails = {
     pro: {
       name: "Pro",
-      price: "19.00",
+      price: PRO_PRICE_USD,
       description: t("payment.description")
     }
   };
@@ -45,7 +46,7 @@ export default function PaymentModal({ isOpen, onClose, planType }: PaymentModal
         <div className="space-y-6">
           <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
             <h4 className="font-semibold text-gray-900 dark:text-white">{t("payment.planName").replace("{name}", plan.name)}</h4>
-            <p className="text-2xl font-bold text-primary">${plan.price}{t("payment.perMonth")}</p>
+            <p className="text-2xl font-bold text-primary">{formatUsd(plan.price)}{t("payment.perMonth")}</p>
             <p className="text-sm text-gray-600 dark:text-gray-300">{plan.description}</p>
           </div>
           
@@ -75,7 +76,7 @@ export default function PaymentModal({ isOpen, onClose, planType }: PaymentModal
               </div>
               <div className="absolute inset-0 opacity-0 pointer-events-auto">
                 <PayPalButton 
-                  amount={plan.price}
+                  amount={plan.price.toFixed(2)}
                   currency="USD"
                   intent="CAPTURE"
                 />
