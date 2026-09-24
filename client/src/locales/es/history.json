@@ -1,0 +1,21 @@
+{
+  "title": "Transcripciones Recientes",
+  "empty": {
+    "title": "No hay transcripciones aún",
+    "description": "Tu historial de transcripciones aparecerá aquí"
+  },
+  "loading": "Cargando transcripciones...",
+  "error": "Error al cargar transcripciones",
+  "duration": "Duración",
+  "words": "Palabras",
+  "accuracy": "Precisión",
+  "processing": "Tiempo de Procesamiento",
+  "ago": "hace",
+  "copyText": "Copiar Texto",
+  "download": "Descargar",
+  "view": "Ver Detalles",
+  "createdAt": "Creado",
+  "copied": "¡Texto copiado al portapapeles!",
+  "processingDesc": "Tu transcripción se está procesando. Esto puede tardar unos minutos...",
+  "failedDesc": "La transcripción falló. Intenta de nuevo con otro video."
+}

@@ -25,9 +25,9 @@ import { Badge } from '@/components/ui/badge';
 import { Loader2, User, Mail, Crown, Calendar, ArrowLeft } from 'lucide-react';
 
 const profileSchema = z.object({
-  username: z.string().min(3, 'Username must be at least 3 characters').max(20, 'Username must be less than 20 characters'),
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
+  username: z.string().min(3, 'validation.usernameMin').max(20, 'validation.usernameMax'),
+  firstName: z.string().min(1, 'validation.firstNameRequired'),
+  lastName: z.string().min(1, 'validation.lastNameRequired'),
 });
 
 type ProfileForm = z.infer<typeof profileSchema>;
@@ -113,7 +113,7 @@ export default function Profile() {
         <Card className="w-full max-w-md">
           <CardContent className="pt-6">
             <div className="text-center text-muted-foreground">
-              Please log in to view your profile.
+              {t("profile.loginRequired")}
             </div>
           </CardContent>
         </Card>

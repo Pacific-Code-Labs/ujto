@@ -1,74 +1,33 @@
-import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "wouter";
 
+// Single-click toggle between English and Spanish (same pattern as ThemeToggle).
 export function LanguageToggle() {
-  const { language, setLanguage } = useLanguage();
-  const [location, setLocation] = useLocation();
+  const { language, setLanguage, t } = useLanguage();
+  const [, setLocation] = useLocation();
+  const next = language === "es" ? "en" : "es";
 
-  const switchLanguage = (newLang: 'en' | 'es') => {
-    setLanguage(newLang);
-    
-    // Parse the current URL properly to separate path and search
-    const currentURL = new URL(window.location.href);
-    const currentPathname = currentURL.pathname;
-    const currentSearch = currentURL.search;
-    
-    // Remove any existing language prefix from current path
-    const currentPath = currentPathname.replace(/^\/(en|es)/, '') || '/';
-    const newPath = currentPath === '/' ? `/${newLang}` : `/${newLang}${currentPath}`;
-    
-    console.log('Language switch:', { 
-      newLang, 
-      originalLocation: location,
-      currentPathname,
-      currentPath, 
-      newPath,
-      currentSearch,
-      finalURL: newPath + currentSearch
-    });
-    
-    // Update the browser URL directly to avoid encoding issues
-    const newURL = newPath + currentSearch;
-    window.history.pushState({}, '', newURL);
-    
-    // Update router location
-    setLocation(newPath + currentSearch);
+  const toggleLanguage = () => {
+    setLanguage(next);
+    // Swap the /en|/es prefix in the current URL, keeping path and query string
+    const { pathname, search } = window.location;
+    const path = pathname.replace(/^\/(en|es)(?=\/|$)/, "") || "/";
+    const newUrl = (path === "/" ? `/${next}` : `/${next}${path}`) + search;
+    window.history.pushState({}, "", newUrl);
+    setLocation(newUrl);
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="w-8 h-8 p-0 rounded-md flex items-center justify-center">
-          <span className="text-base">
-            {language === 'es' ? '🇪🇸' : '🇺🇸'}
-          </span>
-          <span className="sr-only">Toggle language</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-[120px]">
-        <DropdownMenuItem
-          onClick={() => switchLanguage('en')}
-          className={`flex items-center justify-between ${language === 'en' ? 'bg-accent' : ''}`}
-        >
-          <span>English</span>
-          <span className="ml-2">🇺🇸</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => switchLanguage('es')}
-          className={`flex items-center justify-between ${language === 'es' ? 'bg-accent' : ''}`}
-        >
-          <span>Español</span>
-          <span className="ml-2">🇪🇸</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={toggleLanguage}
+      className="h-9 min-w-9 px-2 rounded-md font-semibold text-xs tracking-wide"
+      title={t("language.switchTo")}
+      aria-label={t("language.switchTo")}
+    >
+      <span aria-hidden="true">{language === "es" ? "ES" : "EN"}</span>
+    </Button>
   );
 }

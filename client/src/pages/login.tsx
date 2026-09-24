@@ -23,8 +23,8 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { Home, Loader2 } from 'lucide-react';
 
 const loginSchema = z.object({
-  email: z.string().email('Please enter a valid email address'),
-  password: z.string().min(1, 'Password is required'),
+  email: z.string().email('validation.emailInvalid'),
+  password: z.string().min(1, 'validation.passwordRequired'),
 });
 
 type LoginForm = z.infer<typeof loginSchema>;

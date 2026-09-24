@@ -3,6 +3,7 @@ import { Download, Copy, Clock, FileText, Target, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface TranscriptionResultsProps {
   transcription: {
@@ -16,6 +17,7 @@ interface TranscriptionResultsProps {
 }
 
 export default function TranscriptionResults({ transcription }: TranscriptionResultsProps) {
+  const { t } = useLanguage();
   const { toast } = useToast();
 
   const formatDuration = (seconds: number): string => {
@@ -34,8 +36,8 @@ export default function TranscriptionResults({ transcription }: TranscriptionRes
     document.body.removeChild(element);
     
     toast({
-      title: "Download Started",
-      description: "Your transcription has been downloaded as a text file.",
+      title: t("messages.downloadTitle"),
+      description: t("messages.downloadStarted"),
     });
   };
 
@@ -43,13 +45,13 @@ export default function TranscriptionResults({ transcription }: TranscriptionRes
     try {
       await navigator.clipboard.writeText(transcription.transcript);
       toast({
-        title: "Copied",
-        description: "Transcription copied to clipboard!",
+        title: t("messages.copied"),
+        description: t("messages.copied"),
       });
     } catch (err) {
       toast({
-        title: "Error",
-        description: "Failed to copy to clipboard.",
+        title: t("common.error"),
+        description: t("messages.copyFailed"),
         variant: "destructive",
       });
     }
@@ -61,7 +63,7 @@ export default function TranscriptionResults({ transcription }: TranscriptionRes
         <Card className="shadow-xl">
           <CardContent className="p-8">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-gray-900">Your Transcription</h3>
+              <h3 className="text-2xl font-bold text-gray-900">{t("results.title")}</h3>
               <div className="flex space-x-3">
                 <Button onClick={handleDownload} className="bg-primary text-white hover:bg-indigo-600">
                   <Download className="mr-2 h-4 w-4" />
@@ -88,7 +90,7 @@ export default function TranscriptionResults({ transcription }: TranscriptionRes
                   <Clock className="mr-2 h-6 w-6" />
                   {formatDuration(transcription.duration)}
                 </div>
-                <div className="text-sm text-gray-600">Duration</div>
+                <div className="text-sm text-gray-600">{t("results.duration")}</div>
               </div>
               
               <div className="bg-gray-50 rounded-lg p-4">
@@ -96,7 +98,7 @@ export default function TranscriptionResults({ transcription }: TranscriptionRes
                   <FileText className="mr-2 h-6 w-6" />
                   {transcription.wordCount.toLocaleString()}
                 </div>
-                <div className="text-sm text-gray-600">Words</div>
+                <div className="text-sm text-gray-600">{t("results.words")}</div>
               </div>
               
               <div className="bg-gray-50 rounded-lg p-4">
@@ -104,7 +106,7 @@ export default function TranscriptionResults({ transcription }: TranscriptionRes
                   <Target className="mr-2 h-6 w-6" />
                   {transcription.accuracy}%
                 </div>
-                <div className="text-sm text-gray-600">Accuracy</div>
+                <div className="text-sm text-gray-600">{t("results.accuracy")}</div>
               </div>
               
               <div className="bg-gray-50 rounded-lg p-4">
@@ -112,7 +114,7 @@ export default function TranscriptionResults({ transcription }: TranscriptionRes
                   <Zap className="mr-2 h-6 w-6" />
                   {transcription.processingTime}s
                 </div>
-                <div className="text-sm text-gray-600">Processing</div>
+                <div className="text-sm text-gray-600">{t("results.processing")}</div>
               </div>
             </div>
           </CardContent>

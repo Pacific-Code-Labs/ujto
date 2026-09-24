@@ -26,24 +26,24 @@ import { Home, Loader2, Eye, EyeOff, ArrowLeft, ArrowRight } from 'lucide-react'
 
 // AWS Cognito password policy: min 8 chars, uppercase, lowercase, number, special char
 const passwordSchema = z.string()
-  .min(8, 'Password must be at least 8 characters')
-  .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-  .regex(/[0-9]/, 'Password must contain at least one number')
-  .regex(/[^a-zA-Z0-9]/, 'Password must contain at least one special character');
+  .min(8, 'validation.passwordMin')
+  .regex(/[a-z]/, 'validation.passwordLower')
+  .regex(/[A-Z]/, 'validation.passwordUpper')
+  .regex(/[0-9]/, 'validation.passwordNumber')
+  .regex(/[^a-zA-Z0-9]/, 'validation.passwordSpecial');
 
 const step1Schema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Please enter a valid email address'),
-  username: z.string().min(3, 'Username must be at least 3 characters').max(20, 'Username must be less than 20 characters'),
+  firstName: z.string().min(1, 'validation.firstNameRequired'),
+  lastName: z.string().min(1, 'validation.lastNameRequired'),
+  email: z.string().email('validation.emailInvalid'),
+  username: z.string().min(3, 'validation.usernameMin').max(20, 'validation.usernameMax'),
 });
 
 const step2Schema = z.object({
   password: passwordSchema,
   confirmPassword: z.string(),
 }).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
+  message: "validation.passwordsMismatch",
   path: ["confirmPassword"],
 });
 

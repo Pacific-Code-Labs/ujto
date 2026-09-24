@@ -1,0 +1,12 @@
+{
+  "email": "Dirección de Email",
+  "emailPlaceholder": "Ingresa tu dirección de email",
+  "continue": "Continuar al Pago",
+  "subscribe": "Suscribirse Ahora",
+  "complete": "Completar Pago",
+  "setupError": "Error de Configuración",
+  "paymentError": "Error de Configuración de Pago",
+  "tryAgain": "Intentar de Nuevo",
+  "backHome": "Volver al Inicio",
+  "back": "Atrás"
+}

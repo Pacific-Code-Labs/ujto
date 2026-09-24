@@ -1,0 +1,36 @@
+{
+  "title": "Precios Simples y Transparentes",
+  "subtitle": "Comienza gratis, actualiza cuando necesites más. Sin tarifas ocultas, cancela en cualquier momento.",
+  "free": {
+    "title": "Gratis",
+    "subtitle": "Perfecto para probar",
+    "transcriptions": "3 transcripciones por día",
+    "duration": "Hasta 10 minutos por video",
+    "accuracy": "Precisión básica",
+    "format": "Descarga como TXT",
+    "button": "Plan Actual"
+  },
+  "pro": {
+    "title": "Pro",
+    "subtitle": "por mes",
+    "popular": "Más Popular",
+    "unlimited": "Transcripciones ilimitadas",
+    "duration": "Hasta 2 horas por video",
+    "accuracy": "Precisión premium (99%)",
+    "formats": "Múltiples formatos (TXT, SRT, VTT)",
+    "priority": "Procesamiento prioritario",
+    "support": "Soporte por email",
+    "button": "Actualizar a Pro"
+  },
+  "enterprise": {
+    "title": "Empresarial",
+    "subtitle": "Para equipos grandes",
+    "everything": "Todo en Pro",
+    "api": "Integración API personalizada",
+    "whitelabel": "Opciones de marca blanca",
+    "phone": "Soporte telefónico 24/7",
+    "sla": "Garantía SLA",
+    "button": "Contactar Ventas"
+  },
+  "payment": "Pago seguro proporcionado por"
+}

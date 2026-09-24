@@ -1,0 +1,20 @@
+{
+  "title": "Choose Payment Method",
+  "plan": "Plan",
+  "description": "Monthly subscription for unlimited transcriptions",
+  "stripe": "Pay with Stripe",
+  "paypal": "PayPal",
+  "secure": "Secured by 256-bit SSL encryption",
+  "failed": "Payment Failed",
+  "success": "Payment Successful",
+  "successTitle": "Payment Successful!",
+  "thanks": "Thank you for your purchase!",
+  "successDesc": "Thank you for your purchase. You can now enjoy unlimited transcriptions.",
+  "settingUp": "Setting up payment...",
+  "setupErrorTitle": "Payment Setup Error",
+  "setupErrorDesc": "Unable to setup payment. Please try again.",
+  "oneTime": "One-time payment for Pro features",
+  "paypalUnavailable": "PayPal temporarily unavailable",
+  "payWithPaypal": "Pay with PayPal",
+  "completePurchase": "Complete Your Purchase"
+}

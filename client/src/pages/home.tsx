@@ -18,6 +18,7 @@ import { useEmailVerificationGuard } from "@/hooks/useEmailVerification";
 import { useLocation } from "wouter";
 import { queryClient } from "@/lib/queryClient";
 import { createTranscription, queryKeys } from "@/lib/api";
+import { useUsage } from "@/hooks/useUsage";
 
 interface Transcription {
   id: string;
@@ -58,9 +59,10 @@ export default function Home() {
   }, [isAuthenticated, isLoading, user]);
 
   // Use server data if authenticated, otherwise fallback to localStorage
-  const userTranscriptionsUsed = isAuthenticated ? (user?.transcriptionsUsed || 0) : transcriptionsUsed;
-  const isProUser = isAuthenticated ? user?.isPro : false;
-  const remainingTranscriptions = isProUser ? Infinity : Math.max(0, 3 - userTranscriptionsUsed);
+  const { remaining } = useUsage();
+  const remainingTranscriptions = isAuthenticated
+    ? remaining ?? 0
+    : Math.max(0, 3 - transcriptionsUsed);
 
   // Auto-transcribe pending video URL after login
   useEffect(() => {
@@ -75,6 +77,7 @@ export default function Home() {
           const created = await createTranscription(user!.id, pendingVideoUrl.trim());
           queryClient.invalidateQueries({ queryKey: queryKeys.transcriptions(user!.id) });
           queryClient.invalidateQueries({ queryKey: queryKeys.profile });
+          queryClient.invalidateQueries({ queryKey: queryKeys.usage(user!.id) });
 
           toast({
             title: t('transcription.queued.title'),
@@ -456,7 +459,7 @@ export default function Home() {
             {/* Pro Tier - Coming Soon */}
             <Card className="pricing-card border-2 border-gray-300 dark:border-gray-600 relative bg-white dark:bg-gray-800 flex flex-col opacity-75">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-gray-500 text-white">Coming Soon</Badge>
+                <Badge className="bg-gray-500 text-white">{t("common.comingSoon")}</Badge>
               </div>
               <CardContent className="p-8 flex-grow flex flex-col">
                 <div className="text-center mb-8">

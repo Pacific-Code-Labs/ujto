@@ -9,12 +9,14 @@ import { Loader2, ArrowLeft, CheckCircle } from "lucide-react";
 import { useLocation } from "wouter";
 
 import { STRIPE_PUBLIC_KEY } from "@/lib/config";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Make sure to call `loadStripe` outside of a component's render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = STRIPE_PUBLIC_KEY ? loadStripe(STRIPE_PUBLIC_KEY) : null;
 
 const CheckoutForm = () => {
+  const { t } = useLanguage();
   const stripe = useStripe();
   const elements = useElements();
   const { toast } = useToast();
@@ -41,15 +43,15 @@ const CheckoutForm = () => {
 
     if (error) {
       toast({
-        title: "Payment Failed",
+        title: t("payment.failed"),
         description: error.message,
         variant: "destructive",
       });
     } else {
       setPaymentSucceeded(true);
       toast({
-        title: "Payment Successful",
-        description: "Thank you for your purchase!",
+        title: t("payment.success"),
+        description: t("payment.thanks"),
       });
     }
 
@@ -60,10 +62,10 @@ const CheckoutForm = () => {
     return (
       <div className="text-center py-12">
         <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Payment Successful!</h2>
-        <p className="text-gray-600 mb-6">Thank you for your purchase. You can now enjoy unlimited transcriptions.</p>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">{t("payment.successTitle")}</h2>
+        <p className="text-gray-600 mb-6">{t("payment.successDesc")}</p>
         <Button onClick={() => setLocation('/')} className="bg-primary text-white">
-          Return to Home
+          {t("messages.returnHome")}
         </Button>
       </div>
     );
@@ -91,6 +93,7 @@ const CheckoutForm = () => {
 };
 
 export default function Checkout() {
+  const { t } = useLanguage();
   const [clientSecret, setClientSecret] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [, setLocation] = useLocation();
@@ -114,7 +117,7 @@ export default function Checkout() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-primary" />
-          <p className="text-gray-600">Setting up payment...</p>
+          <p className="text-gray-600">{t("payment.settingUp")}</p>
         </div>
       </div>
     );
@@ -125,11 +128,11 @@ export default function Checkout() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <Card className="w-full max-w-md mx-4">
           <CardContent className="pt-6 text-center">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">Payment Setup Error</h2>
-            <p className="text-gray-600 mb-6">Unable to setup payment. Please try again.</p>
+            <h2 className="text-xl font-bold text-gray-900 mb-4">{t("payment.setupErrorTitle")}</h2>
+            <p className="text-gray-600 mb-6">{t("payment.setupErrorDesc")}</p>
             <Button onClick={() => setLocation('/')} variant="outline">
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Home
+              {t("common.backToHome")}
             </Button>
           </CardContent>
         </Card>
@@ -146,17 +149,17 @@ export default function Checkout() {
           className="mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Home
+          {t("common.backToHome")}
         </Button>
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-center">Complete Your Purchase</CardTitle>
+            <CardTitle className="text-2xl font-bold text-center">{t("payment.completePurchase")}</CardTitle>
             <div className="text-center">
               <div className="bg-gray-50 rounded-lg p-4 mt-4">
-                <h3 className="font-semibold text-gray-900">Pro Plan</h3>
+                <h3 className="font-semibold text-gray-900">{t("subscription.planTitle")}</h3>
                 <p className="text-3xl font-bold text-primary">$19.00</p>
-                <p className="text-sm text-gray-600">One-time payment for Pro features</p>
+                <p className="text-sm text-gray-600">{t("payment.oneTime")}</p>
               </div>
             </div>
           </CardHeader>

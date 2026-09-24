@@ -1,0 +1,29 @@
+{
+  "title": "Perfil",
+  "description": "Gestiona la información de tu cuenta y preferencias.",
+  "verified": "Verificado",
+  "plan": "Plan",
+  "memberSince": "Miembro desde",
+  "transcriptionsUsed": "transcripciones utilizadas",
+  "edit": {
+    "title": "Editar Perfil",
+    "description": "Actualiza la información de tu perfil. Nota: El email no se puede cambiar.",
+    "username": "Nombre de Usuario",
+    "usernamePlaceholder": "Ingresa tu nombre de usuario",
+    "firstName": "Nombre",
+    "firstNamePlaceholder": "Ingresa tu nombre",
+    "lastName": "Apellido",
+    "lastNamePlaceholder": "Ingresa tu apellido",
+    "emailNote": "El email no se puede cambiar",
+    "submit": "Actualizar Perfil"
+  },
+  "update": {
+    "success": {
+      "title": "Perfil Actualizado",
+      "description": "Tu perfil ha sido actualizado exitosamente."
+    },
+    "error": "Error al actualizar perfil"
+  },
+  "editProfile": "Editar Perfil",
+  "loginRequired": "Inicia sesión para ver tu perfil."
+}

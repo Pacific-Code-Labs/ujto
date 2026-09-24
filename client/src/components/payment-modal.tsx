@@ -13,13 +13,14 @@ interface PaymentModalProps {
 }
 
 export default function PaymentModal({ isOpen, onClose, planType }: PaymentModalProps) {
+  const { t } = useLanguage();
   const [, setLocation] = useLocation();
 
   const planDetails = {
     pro: {
       name: "Pro",
       price: "19.00",
-      description: "Monthly subscription for unlimited transcriptions"
+      description: t("payment.description")
     }
   };
 
@@ -37,7 +38,7 @@ export default function PaymentModal({ isOpen, onClose, planType }: PaymentModal
       <DialogContent className="max-w-md">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-white text-center">
-            Choose Payment Method
+            {t("payment.title")}
           </DialogTitle>
         </DialogHeader>
         
@@ -55,7 +56,7 @@ export default function PaymentModal({ isOpen, onClose, planType }: PaymentModal
             >
               <div className="flex items-center">
                 <div className="mr-3 text-xl font-bold">STRIPE</div>
-                <span>Pay with Stripe</span>
+                <span>{t("payment.stripe")}</span>
               </div>
               <div className="bg-white px-3 py-1 rounded text-primary font-bold text-sm">
                 STRIPE
@@ -66,7 +67,7 @@ export default function PaymentModal({ isOpen, onClose, planType }: PaymentModal
               <div className="flex items-center justify-between py-4 px-4 pointer-events-none">
                 <div className="flex items-center">
                   <div className="mr-3 text-xl font-bold">PayPal</div>
-                  <span>Pay with PayPal</span>
+                  <span>{t("payment.payWithPaypal")}</span>
                 </div>
                 <div className="bg-yellow-400 px-3 py-1 rounded text-blue-900 font-bold text-sm">
                   PayPal

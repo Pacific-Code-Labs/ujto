@@ -13,7 +13,7 @@ import { resetPassword } from "aws-amplify/auth";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const forgotPasswordSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().email("validation.emailInvalid"),
 });
 
 type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>;
@@ -105,7 +105,7 @@ export default function ForgotPassword() {
               />
               {form.formState.errors.email && (
                 <p className="text-sm text-red-500">
-                  {form.formState.errors.email.message}
+                  {t(String(form.formState.errors.email.message ?? ""))}
                 </p>
               )}
             </div>

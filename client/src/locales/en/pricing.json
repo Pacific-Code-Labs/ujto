@@ -1,0 +1,36 @@
+{
+  "title": "Simple, Transparent Pricing",
+  "subtitle": "Start free, upgrade when you need more. No hidden fees, cancel anytime.",
+  "free": {
+    "title": "Free",
+    "subtitle": "Perfect for trying out",
+    "transcriptions": "3 transcriptions per day",
+    "duration": "Up to 10 minutes per video",
+    "accuracy": "Basic accuracy",
+    "format": "Download as TXT",
+    "button": "Current Plan"
+  },
+  "pro": {
+    "title": "Pro",
+    "subtitle": "per month",
+    "popular": "Most Popular",
+    "unlimited": "Unlimited transcriptions",
+    "duration": "Up to 2 hours per video",
+    "accuracy": "Premium accuracy (99%)",
+    "formats": "Multiple formats (TXT, SRT, VTT)",
+    "priority": "Priority processing",
+    "support": "Email support",
+    "button": "Upgrade to Pro"
+  },
+  "enterprise": {
+    "title": "Enterprise",
+    "subtitle": "For large teams",
+    "everything": "Everything in Pro",
+    "api": "Custom API integration",
+    "whitelabel": "White-label options",
+    "phone": "24/7 phone support",
+    "sla": "SLA guarantee",
+    "button": "Contact Sales"
+  },
+  "payment": "Secure payment powered by"
+}

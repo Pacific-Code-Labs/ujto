@@ -1,7 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function NotFound() {
+  const { t } = useLanguage();
   // Debug information for GitHub Pages deployment
   const currentPath = window.location.pathname;
   const currentSearch = window.location.search;
@@ -20,21 +22,13 @@ export default function NotFound() {
         <CardContent className="pt-6">
           <div className="flex mb-4 gap-2">
             <AlertCircle className="h-8 w-8 text-red-500" />
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">404 Page Not Found</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t("notFound.title")}</h1>
           </div>
 
           <p className="mt-4 text-sm text-gray-600 dark:text-gray-300">
-            The requested page could not be found.
+            {t("notFound.description")}
           </p>
           
-          {isGitHubPages && (
-            <div className="mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg text-xs text-gray-600 dark:text-gray-300">
-              <p><strong>Debug Info:</strong></p>
-              <p>Path: {currentPath}</p>
-              <p>Search: {currentSearch || 'none'}</p>
-              <p>GitHub Pages: {isGitHubPages ? 'Yes' : 'No'}</p>
-            </div>
-          )}
           
           <div className="mt-6">
             <a 
