@@ -1,4 +1,4 @@
-// API configuration. VITE_* values come from SSM (/video-transcript/<env>/web) via
+// API configuration. VITE_* values come from SSM (/ujto/<env>/web) via
 // scripts/load-env-from-ssm.sh, locally and in the GitHub Pages build.
 const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL as string | undefined;
 
