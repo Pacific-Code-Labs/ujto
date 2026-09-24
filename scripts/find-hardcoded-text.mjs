@@ -7,7 +7,7 @@ import ts from "typescript";
 
 const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..", "client", "src");
 // Brand names / symbols that are the same in every language.
-const ALLOW = new Set(["VideoScript", "STRIPE", "Stripe", "PayPal", "EN", "ES", "∞", "…", "$19.00", "$19", "404"]);
+const ALLOW = new Set(["Ujtö̀", "VideoScript", "STRIPE", "Stripe", "PayPal", "EN", "ES", "∞", "…", "$19.00", "$19", "404"]);
 const SKIP_DIRS = new Set(["locales", "ui"]);
 const SKIP_FILES = new Set(["DebugInfo.tsx"]);
 const USER_ATTRS = new Set(["title", "placeholder", "aria-label", "alt", "label"]);

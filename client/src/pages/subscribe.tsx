@@ -67,7 +67,7 @@ const SubscribeForm = ({ email }: { email: string }) => {
         <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('subscription.welcomePro')}</h2>
         <p className="text-gray-600 dark:text-gray-300 mb-6">{t('subscription.activeDesc')}</p>
-        <Button onClick={() => setLocation(language === 'es' ? '/es' : '/')} className="bg-primary text-white">
+        <Button onClick={() => setLocation(language === 'es' ? '/es' : '/')} className="bg-primary text-primary-foreground">
           {t('subscription.startTranscribing')}
         </Button>
       </div>
@@ -80,7 +80,7 @@ const SubscribeForm = ({ email }: { email: string }) => {
       <Button 
         type="submit" 
         disabled={!stripe || !elements || isProcessing}
-        className="w-full bg-primary text-white hover:bg-indigo-600"
+        className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
       >
         {isProcessing ? (
           <>
@@ -165,27 +165,27 @@ export default function Subscribe() {
                 
                 <ul className="space-y-3">
                   <li className="flex items-center">
-                    <Check className="text-accent mr-3 h-5 w-5" />
+                    <Check className="text-success mr-3 h-5 w-5" />
                     <span className="text-gray-700 dark:text-gray-300">{t('pricing.pro.unlimited')}</span>
                   </li>
                   <li className="flex items-center">
-                    <Check className="text-accent mr-3 h-5 w-5" />
+                    <Check className="text-success mr-3 h-5 w-5" />
                     <span className="text-gray-700 dark:text-gray-300">{t('pricing.pro.duration')}</span>
                   </li>
                   <li className="flex items-center">
-                    <Check className="text-accent mr-3 h-5 w-5" />
+                    <Check className="text-success mr-3 h-5 w-5" />
                     <span className="text-gray-700 dark:text-gray-300">{t('pricing.pro.accuracy')}</span>
                   </li>
                   <li className="flex items-center">
-                    <Check className="text-accent mr-3 h-5 w-5" />
+                    <Check className="text-success mr-3 h-5 w-5" />
                     <span className="text-gray-700 dark:text-gray-300">{t('pricing.pro.formats')}</span>
                   </li>
                   <li className="flex items-center">
-                    <Check className="text-accent mr-3 h-5 w-5" />
+                    <Check className="text-success mr-3 h-5 w-5" />
                     <span className="text-gray-700 dark:text-gray-300">{t('pricing.pro.priority')}</span>
                   </li>
                   <li className="flex items-center">
-                    <Check className="text-accent mr-3 h-5 w-5" />
+                    <Check className="text-success mr-3 h-5 w-5" />
                     <span className="text-gray-700 dark:text-gray-300">{t('pricing.pro.support')}</span>
                   </li>
                 </ul>
@@ -207,7 +207,7 @@ export default function Subscribe() {
                 <Button 
                   type="submit" 
                   disabled={isLoading}
-                  className="w-full bg-primary text-white hover:bg-indigo-600"
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                   {isLoading ? (
                     <>

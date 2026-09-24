@@ -65,11 +65,11 @@ export default function TranscriptionResults({ transcription }: TranscriptionRes
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-2xl font-bold text-gray-900">{t("results.title")}</h3>
               <div className="flex space-x-3">
-                <Button onClick={handleDownload} className="bg-primary text-white hover:bg-indigo-600">
+                <Button onClick={handleDownload} className="bg-primary text-primary-foreground hover:bg-primary/90">
                   <Download className="mr-2 h-4 w-4" />
                   {t("results.download")}
                 </Button>
-                <Button onClick={handleCopy} className="bg-secondary text-white hover:bg-violet-600">
+                <Button onClick={handleCopy} className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
                   <Copy className="mr-2 h-4 w-4" />
                   {t("results.copy")}
                 </Button>

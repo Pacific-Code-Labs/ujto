@@ -33,7 +33,7 @@ export default function NotFound() {
           <div className="mt-6">
             <a 
               href={isGitHubPages ? '/video-transcript/' : '/'}
-              className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+              className="inline-flex items-center px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg transition-colors"
             >
               {t("notFound.goHome")}
             </a>

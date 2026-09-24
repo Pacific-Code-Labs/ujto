@@ -1,6 +1,6 @@
-# Video Transcript — Web App
+# Ujtö̀ — Web App
 
-React + TypeScript frontend for the Video Transcript service, deployed as a static site to GitHub Pages.
+React + TypeScript frontend for **Ujtö̀** (“word; language” in Bribri — the name story is shown on the register page), deployed as a static site to GitHub Pages.
 
 The backend lives in separate repositories:
 - API: `Pacific-Code-Labs/video-transcript-be` (FastAPI on AWS Lambda)

@@ -133,7 +133,7 @@ export default function VideoTranscriptionForm({
         <Button
           type="submit"
           disabled={isProcessing || remainingTranscriptions <= 0}
-          className="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-indigo-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isProcessing ? (
             <>
@@ -150,7 +150,7 @@ export default function VideoTranscriptionForm({
       </form>
       
       {isProcessing && processingStatus && (
-        <div className="mt-4 flex items-center justify-center text-sm text-blue-600 dark:text-blue-400">
+        <div className="mt-4 flex items-center justify-center text-sm text-primary">
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           <span>{processingStatus}</span>
         </div>

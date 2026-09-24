@@ -143,7 +143,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-primary">VideoScript</h1>
+              <h1 className="text-2xl font-bold text-primary">Ujtö̀</h1>
             </div>
             <div className="hidden lg:flex items-center space-x-4">
               {!isAuthenticated && (
@@ -316,9 +316,9 @@ export default function Home() {
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
               {t('hero.title')}
-              <span className="block text-indigo-200">{t('hero.subtitle')}</span>
+              <span className="block text-white/80">{t('hero.subtitle')}</span>
             </h1>
-            <p className="text-xl text-indigo-100 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
               {t('hero.description')}
             </p>
             
@@ -425,19 +425,19 @@ export default function Home() {
                 <div className="flex-grow">
                   <ul className="space-y-4 mb-8">
                     <li className="flex items-center">
-                      <Check className="text-accent mr-3 h-5 w-5" />
+                      <Check className="text-success mr-3 h-5 w-5" />
                       <span className="text-gray-700 dark:text-gray-300">{t('pricing.free.transcriptions')}</span>
                     </li>
                     <li className="flex items-center">
-                      <Check className="text-accent mr-3 h-5 w-5" />
+                      <Check className="text-success mr-3 h-5 w-5" />
                       <span className="text-gray-700 dark:text-gray-300">{t('pricing.free.duration')}</span>
                     </li>
                     <li className="flex items-center">
-                      <Check className="text-accent mr-3 h-5 w-5" />
+                      <Check className="text-success mr-3 h-5 w-5" />
                       <span className="text-gray-700 dark:text-gray-300">{t('pricing.free.accuracy')}</span>
                     </li>
                     <li className="flex items-center">
-                      <Check className="text-accent mr-3 h-5 w-5" />
+                      <Check className="text-success mr-3 h-5 w-5" />
                       <span className="text-gray-700 dark:text-gray-300">{t('pricing.free.format')}</span>
                     </li>
                   </ul>
@@ -611,7 +611,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
             <div className="col-span-2">
-              <h3 className="text-2xl font-bold mb-4">VideoScript</h3>
+              <h3 className="text-2xl font-bold mb-4">Ujtö̀</h3>
               <p className="text-gray-400 dark:text-gray-300 mb-6">
                 {t('footer.description')}
               </p>

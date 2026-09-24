@@ -65,7 +65,7 @@ const CheckoutForm = () => {
         <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
         <h2 className="text-2xl font-bold text-gray-900 mb-2">{t("payment.successTitle")}</h2>
         <p className="text-gray-600 mb-6">{t("payment.successDesc")}</p>
-        <Button onClick={() => setLocation('/')} className="bg-primary text-white">
+        <Button onClick={() => setLocation('/')} className="bg-primary text-primary-foreground">
           {t("messages.returnHome")}
         </Button>
       </div>
@@ -78,7 +78,7 @@ const CheckoutForm = () => {
       <Button 
         type="submit" 
         disabled={!stripe || !elements || isProcessing}
-        className="w-full bg-primary text-white hover:bg-indigo-600"
+        className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
       >
         {isProcessing ? (
           <>

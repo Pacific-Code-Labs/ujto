@@ -23,6 +23,7 @@ import { PasswordStrengthIndicator } from '@/components/PasswordStrengthIndicato
 import { LanguageToggle } from '@/components/LanguageToggle';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Home, Loader2, Eye, EyeOff, ArrowLeft, ArrowRight } from 'lucide-react';
+import { BrandStoryPanel } from "@/components/BrandStoryPanel";
 
 // AWS Cognito password policy: min 8 chars, uppercase, lowercase, number, special char
 const passwordSchema = z.string()
@@ -179,7 +180,7 @@ export default function Register() {
   }, [step1Data, currentStep, step1Form]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
       {/* Back to Home Button */}
       <Button
         variant="ghost"
@@ -197,7 +198,12 @@ export default function Register() {
         <ThemeToggle />
       </div>
       
-      <Card className="w-full max-w-lg">
+      <div className="w-full max-w-5xl grid gap-6 lg:grid-cols-2 items-stretch mt-16 mb-4">
+        {/* Form first on phones; story beside it on large screens */}
+        <div className="order-last lg:order-first">
+          <BrandStoryPanel />
+        </div>
+      <Card className="w-full">
         <CardHeader className="space-y-4">
           <div className="text-center">
             <CardTitle className="text-2xl font-bold">
@@ -405,6 +411,7 @@ export default function Register() {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 }
