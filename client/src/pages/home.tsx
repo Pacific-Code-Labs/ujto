@@ -18,6 +18,7 @@ import { useEmailVerificationGuard } from "@/hooks/useEmailVerification";
 import { useLocation } from "wouter";
 import { useUsage } from "@/hooks/useUsage";
 import { PRO_PRICE_USD, formatUsd } from "@/lib/plans";
+import { BrandLogo } from "@/components/BrandLogo";
 
 interface Transcription {
   id: string;
@@ -101,7 +102,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-primary">Ujtö̀</h1>
+              <h1><BrandLogo className="h-9" /></h1>
             </div>
             <div className="hidden lg:flex items-center space-x-4">
               {!isAuthenticated && (
@@ -569,7 +570,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
             <div className="col-span-2">
-              <h3 className="text-2xl font-bold mb-4">Ujtö̀</h3>
+              <h3 className="mb-4"><BrandLogo variant="reverse" className="h-9" /></h3>
               <p className="text-gray-400 dark:text-gray-300 mb-6">
                 {t('footer.description')}
               </p>

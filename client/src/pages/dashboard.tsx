@@ -31,6 +31,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { NotificationDropdown } from "@/components/NotificationDropdown";
 import { SiYoutube, SiVimeo } from "react-icons/si";
+import { BrandLogo } from "@/components/BrandLogo";
 
 
 
@@ -357,9 +358,7 @@ export default function Dashboard() {
         <div className="container mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
-              <h1 className="text-xl md:text-2xl font-bold text-primary">
-                Ujtö̀
-              </h1>
+              <h1><BrandLogo className="h-7 md:h-8" /></h1>
             </div>
 
             {/* Desktop Navigation */}
