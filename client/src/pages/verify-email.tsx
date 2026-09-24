@@ -32,7 +32,7 @@ type VerifyEmailForm = z.infer<typeof verifyEmailSchema>;
 
 export default function VerifyEmail() {
   const [, navigate] = useLocation();
-  const { verifyEmail, resendVerificationCode, logout, forceLogout } = useAuth();
+  const { verifyEmail, resendVerificationCode, logout } = useAuth();
   const { toast } = useToast();
   const { t, language } = useLanguage();
   const [email, setEmail] = useState('');
@@ -44,24 +44,6 @@ export default function VerifyEmail() {
       code: '',
     },
   });
-
-  // Force logout when verification page loads to clear any stale sessions
-  // Only do this if user isn't coming from a successful verification
-  useEffect(() => {
-    const cleanSession = async () => {
-      // Check if user just completed verification successfully  
-      const justVerified = sessionStorage.getItem('justVerified');
-      if (justVerified) {
-        console.log('🎉 User just verified, skipping session cleanup');
-        // Don't remove the flag yet - wait until after auto-login completes
-        return;
-      }
-      
-      console.log('🔄 Cleaning session on verification page load');
-      await forceLogout();
-    };
-    cleanSession();
-  }, [forceLogout]);
 
   useEffect(() => {
     // Read verification data from session storage
@@ -112,7 +94,7 @@ export default function VerifyEmail() {
 
         // Small delay to ensure authentication state updates properly
         setTimeout(() => {
-          navigate(`/${language}/`);
+          navigate(`/${language}/dashboard`, { replace: true });
         }, 500);
       },
       onError: (error: any) => {

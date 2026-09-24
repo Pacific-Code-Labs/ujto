@@ -255,14 +255,14 @@ export default function TranscriptionSidebar({
                 </CardHeader>
                 <CardContent className="space-y-3 px-3 pb-3">
                   <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 dark:text-gray-400">
-                    {transcription.duration && (
+                    {transcription.duration > 0 && (
                       <div className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         {formatDuration(transcription.duration)}
                       </div>
                     )}
                     {transcription.status === "completed" &&
-                      transcription.wordCount && (
+                      transcription.wordCount > 0 && (
                         <div className="flex items-center gap-1">
                           <BarChart3 className="h-3 w-3" />
                           {transcription.wordCount} {t("history.words")}
@@ -282,7 +282,11 @@ export default function TranscriptionSidebar({
                     )}
                   {transcription.status === "failed" && (
                     <p className="text-sm text-red-600 dark:text-red-400 italic">
-                      {transcription.errorMessage?.toLowerCase().includes("too long") ? t("messages.videoTooLong") : t("history.failedDesc")}
+                      {transcription.errorMessage === "YOUTUBE_ACCESS_BLOCKED"
+                        ? t("history.youtubeAccessBlocked")
+                        : transcription.errorMessage?.toLowerCase().includes("too long")
+                          ? t("messages.videoTooLong")
+                          : t("history.failedDesc")}
                     </p>
                   )}
                   <div className="flex items-center justify-between">
@@ -292,7 +296,7 @@ export default function TranscriptionSidebar({
                         transcription.transcript,
                       )}
                       {transcription.status === "completed" &&
-                        transcription.accuracy && (
+                        transcription.accuracy > 0 && (
                           <Badge
                             variant="secondary"
                             className="text-xs whitespace-nowrap"

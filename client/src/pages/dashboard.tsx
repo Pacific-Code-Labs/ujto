@@ -3,7 +3,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRequireEmailVerification } from "@/hooks/useEmailVerification";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useLocation } from "wouter";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { ApiError, createTranscription, listTranscriptions, queryKeys } from "@/lib/api";
 import type { Transcription } from "@/lib/api-types";
@@ -26,6 +26,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Icons } from "@/components/ui/icons";
 import { DownloadMenu } from "@/components/DownloadMenu";
 import { useUsage } from "@/hooks/useUsage";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LanguageToggle } from "@/components/LanguageToggle";
 import { NotificationDropdown } from "@/components/NotificationDropdown";
@@ -45,11 +46,43 @@ export default function Dashboard() {
   >([]);
   const [videoUrl, setVideoUrl] = useState("");
   const [isTranscribing, setIsTranscribing] = useState(false);
+  const [pendingVideoUrl, setPendingVideoUrl] = useLocalStorage('pendingVideoUrl', "");
+  const pendingStarted = useRef(false);
 
   // Plan usage comes from the API (daily limit resets at 00:00 UTC)
   const { usage, isLimitReached, isUnlimited } = useUsage();
   const dailyUsage = usage?.usedToday ?? 0;
   const dailyLimit = isUnlimited ? "∞" : usage?.dailyLimit ?? "…";
+
+  // A URL entered before sign-in follows the user directly to the dashboard.
+  useEffect(() => {
+    if (pendingStarted.current || authLoading || !isAuthenticated || !user?.id || !usage || !pendingVideoUrl.trim()) return;
+    pendingStarted.current = true;
+    const url = pendingVideoUrl.trim();
+    setPendingVideoUrl("");
+    if (isLimitReached) {
+      setVideoUrl(url);
+      toast({ title: t("messages.error"), description: t("messages.limitReached"), variant: "destructive" });
+      return;
+    }
+
+    setIsTranscribing(true);
+    createTranscription(user.id, url)
+      .then((created) => {
+        toast({
+          title: t("transcription.queued.title"),
+          description: t("transcription.queued.description").replace("{{title}}", created.videoTitle || url),
+        });
+        queryClient.invalidateQueries({ queryKey: queryKeys.transcriptions(user.id) });
+        queryClient.invalidateQueries({ queryKey: queryKeys.profile });
+        queryClient.invalidateQueries({ queryKey: queryKeys.usage(user.id) });
+      })
+      .catch((error: Error) => {
+        setVideoUrl(url);
+        toast({ title: t("transcription.error.title"), description: error.message || t("transcription.error.description"), variant: "destructive" });
+      })
+      .finally(() => setIsTranscribing(false));
+  }, [authLoading, isAuthenticated, user?.id, usage, pendingVideoUrl, isLimitReached, queryClient, t, toast]);
 
   // Helper function to get video title with fallback
   const getVideoTitle = (url: string) => {
@@ -575,14 +608,14 @@ export default function Dashboard() {
 
                           {/* Duration and Word Count Info */}
                           <div className="grid grid-cols-2 gap-4 text-sm text-gray-600 dark:text-gray-400 mb-3">
-                            {transcription.duration && (
+                            {transcription.duration > 0 && (
                               <div className="flex items-center gap-1">
                                 <Icons.clock className="h-3 w-3" />
                                 {transcription.duration}s
                               </div>
                             )}
                             {transcription.status === "completed" &&
-                              transcription.wordCount && (
+                              transcription.wordCount > 0 && (
                                 <div className="flex items-center gap-1">
                                   <Icons.barChart className="h-3 w-3" />
                                   {transcription.wordCount} {t("history.words")}
@@ -604,7 +637,11 @@ export default function Dashboard() {
                             )}
                           {transcription.status === "failed" && (
                             <p className="text-sm text-red-600 dark:text-red-400 italic mb-3">
-                              {transcription.errorMessage?.toLowerCase().includes("too long") ? t("messages.videoTooLong") : t("history.failedDesc")}
+                              {transcription.errorMessage === "YOUTUBE_ACCESS_BLOCKED"
+                                ? t("history.youtubeAccessBlocked")
+                                : transcription.errorMessage?.toLowerCase().includes("too long")
+                                  ? t("messages.videoTooLong")
+                                  : t("history.failedDesc")}
                             </p>
                           )}
 
@@ -616,7 +653,7 @@ export default function Dashboard() {
                                 transcription.transcript,
                               )}
                               {transcription.status === "completed" &&
-                                transcription.accuracy && (
+                                transcription.accuracy > 0 && (
                                   <Badge
                                     variant="secondary"
                                     className="text-xs whitespace-nowrap"

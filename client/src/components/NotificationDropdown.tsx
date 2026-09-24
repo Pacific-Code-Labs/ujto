@@ -94,6 +94,15 @@ export function NotificationDropdown() {
   const notifications = notificationData?.notifications || [];
   const unreadCount = notificationData?.unreadCount || 0;
 
+  const displayTitle = (notification: { type: string; title: string }) => {
+    if (notification.type === 'transcription_completed') return t('notifications.transcriptionCompleted');
+    if (notification.type === 'transcription_failed') return t('notifications.transcriptionFailed');
+    if (notification.type === 'system' && /^(🎉\s*)?(Welcome to|¡Bienvenido a) Ujtö̀/i.test(notification.title)) {
+      return t('notifications.welcomeTitle');
+    }
+    return notification.title;
+  };
+
   if (!user) {
     return null;
   }
@@ -169,7 +178,7 @@ export function NotificationDropdown() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-2">
                       <h4 className="text-sm font-medium truncate">
-                        {notification.title}
+                        {displayTitle(notification)}
                       </h4>
                       {!notification.isRead && (
                         <Button

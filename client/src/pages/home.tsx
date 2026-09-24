@@ -16,8 +16,6 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/hooks/useAuth";
 import { useEmailVerificationGuard } from "@/hooks/useEmailVerification";
 import { useLocation } from "wouter";
-import { queryClient } from "@/lib/queryClient";
-import { createTranscription, queryKeys } from "@/lib/api";
 import { useUsage } from "@/hooks/useUsage";
 import { PRO_PRICE_USD, formatUsd } from "@/lib/plans";
 
@@ -39,7 +37,7 @@ export default function Home() {
   const [showResults, setShowResults] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [pendingVideoUrl, setPendingVideoUrl] = useLocalStorage('pendingVideoUrl', "");
+  const [, setPendingVideoUrl] = useLocalStorage('pendingVideoUrl', "");
   const { toast } = useToast();
   const { t, language } = useLanguage();
   const { user, isAuthenticated, isLoading, logout } = useAuth();
@@ -64,46 +62,6 @@ export default function Home() {
   const remainingTranscriptions = isAuthenticated
     ? remaining ?? 0
     : Math.max(0, 3 - transcriptionsUsed);
-
-  // Auto-transcribe pending video URL after login
-  useEffect(() => {
-    if (isAuthenticated && pendingVideoUrl && pendingVideoUrl.trim() && remainingTranscriptions > 0) {
-      if (import.meta.env.DEV) {
-        console.log('Auto-transcribing pending URL:', pendingVideoUrl);
-      }
-      
-      // Auto-submit the pending URL for transcription via new SQS system
-      const autoTranscribe = async () => {
-        try {
-          const created = await createTranscription(user!.id, pendingVideoUrl.trim());
-          queryClient.invalidateQueries({ queryKey: queryKeys.transcriptions(user!.id) });
-          queryClient.invalidateQueries({ queryKey: queryKeys.profile });
-          queryClient.invalidateQueries({ queryKey: queryKeys.usage(user!.id) });
-
-          toast({
-            title: t('transcription.queued.title'),
-            description: t('transcription.queued.description').replace('{{title}}', created.videoTitle || 'Video'),
-          });
-
-          setPendingVideoUrl(""); // Clear pending URL
-          
-          // Navigate to dashboard to see processing status
-          navigate(`/${language}/dashboard`);
-          
-        } catch (error: any) {
-          console.error('Auto-transcription error:', error);
-          toast({
-            title: t('messages.error'),
-            description: error.message || t('messages.unknownError'),
-            variant: 'destructive',
-          });
-          setPendingVideoUrl(""); // Clear pending URL even on error
-        }
-      };
-      
-      autoTranscribe();
-    }
-  }, [isAuthenticated, pendingVideoUrl, remainingTranscriptions, t, toast, navigate, language]);
 
   const handleTranscriptionComplete = async (transcription: Transcription) => {
     setCurrentTranscription(transcription);

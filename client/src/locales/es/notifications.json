@@ -3,9 +3,10 @@
   "markAllRead": "Marcar todo como leído",
   "empty": "Sin notificaciones",
   "emptyDescription": "¡Estás al día! Las nuevas notificaciones aparecerán aquí.",
-  "transcriptionCompleted": "Transcripción Completada",
-  "transcriptionFailed": "Transcripción Falló",
+  "transcriptionCompleted": "Transcripción completada",
+  "transcriptionFailed": "No se pudo transcribir el video",
   "system": "Notificación del Sistema",
+  "welcomeTitle": "¡Bienvenido a Ujtö̀!",
   "timeAgo": {
     "justNow": "Justo ahora",
     "minutesAgo": "hace {minutes} minutos",

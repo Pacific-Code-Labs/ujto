@@ -3,9 +3,10 @@
   "markAllRead": "Mark all as read",
   "empty": "No notifications",
   "emptyDescription": "You're all caught up! New notifications will appear here.",
-  "transcriptionCompleted": "Transcription Completed",
-  "transcriptionFailed": "Transcription Failed",
+  "transcriptionCompleted": "Transcription completed",
+  "transcriptionFailed": "Transcription failed",
   "system": "System Notification",
+  "welcomeTitle": "Welcome to Ujtö̀!",
   "timeAgo": {
     "justNow": "Just now",
     "minutesAgo": "{minutes} minutes ago",
