@@ -4,6 +4,6 @@
   "copy": "Copiar Texto",
   "duration": "Duración",
   "words": "Palabras",
-  "accuracy": "Precisión",
+  "accuracy": "Confianza del modelo",
   "processing": "Procesamiento"
 }

@@ -4,6 +4,6 @@
   "copy": "Copy Text",
   "duration": "Duration",
   "words": "Words",
-  "accuracy": "Accuracy",
+  "accuracy": "Model confidence",
   "processing": "Processing"
 }

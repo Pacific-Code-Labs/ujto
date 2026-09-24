@@ -8,7 +8,7 @@
   "error": "Failed to load transcriptions",
   "duration": "Duration",
   "words": "Words",
-  "accuracy": "Accuracy",
+  "accuracy": "Model confidence",
   "processing": "Processing Time",
   "ago": "ago",
   "copyText": "Copy Text",
