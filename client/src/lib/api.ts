@@ -1,4 +1,4 @@
-// Typed client for the Ujtö̀ API (Pacific-Code-Labs/video-transcript-be).
+// Typed client for the Ujtö̀ API (Pacific-Code-Labs/ujto-be).
 // The API speaks snake_case; this module maps responses to the camelCase shapes the UI uses.
 import { fetchAuthSession } from "aws-amplify/auth";
 import { API_BASE_URL } from "./config";

@@ -3,8 +3,8 @@
 React + TypeScript frontend for **Ujtö̀** (“word; language” in Bribri — the name story is shown on the register page), deployed as a static site to GitHub Pages.
 
 The backend lives in separate repositories:
-- API: `Pacific-Code-Labs/video-transcript-be` (FastAPI on AWS Lambda)
-- Transcription worker: `Pacific-Code-Labs/video-transcript-listener-be`
+- API: `Pacific-Code-Labs/ujto-be` (FastAPI on AWS Lambda)
+- Transcription worker: `Pacific-Code-Labs/ujto-listener-be`
 
 ## Features
 
