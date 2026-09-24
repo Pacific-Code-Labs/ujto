@@ -318,14 +318,14 @@ export default function Dashboard() {
   const transcriptions = transcriptionData?.transcriptions || [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted">
       {/* Mobile/Tablet Navigation Bar */}
       <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="container mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <h1 className="text-xl md:text-2xl font-bold text-primary">
-                VideoScript
+                Ujtö̀
               </h1>
             </div>
 

@@ -153,7 +153,7 @@ export function NotificationDropdown() {
               <DropdownMenuItem
                 key={notification.id}
                 className={`p-4 cursor-pointer focus:bg-muted ${
-                  !notification.isRead ? 'bg-blue-50 dark:bg-blue-950/20' : ''
+                  !notification.isRead ? 'bg-primary/5 dark:bg-primary/10' : ''
                 }`}
                 onSelect={() => {
                   if (!notification.isRead) {

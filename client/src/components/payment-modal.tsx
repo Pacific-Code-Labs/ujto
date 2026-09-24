@@ -53,7 +53,7 @@ export default function PaymentModal({ isOpen, onClose, planType }: PaymentModal
           <div className="space-y-4">
             <Button 
               onClick={handleStripePayment}
-              className="w-full bg-primary text-white py-4 hover:bg-indigo-600 transition-colors flex items-center justify-between"
+              className="w-full bg-primary text-primary-foreground py-4 hover:bg-primary/90 transition-colors flex items-center justify-between"
             >
               <div className="flex items-center">
                 <div className="mr-3 text-xl font-bold">STRIPE</div>
