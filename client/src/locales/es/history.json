@@ -8,7 +8,7 @@
   "error": "Error al cargar transcripciones",
   "duration": "Duración",
   "words": "Palabras",
-  "accuracy": "Precisión",
+  "accuracy": "Confianza del modelo",
   "processing": "Tiempo de Procesamiento",
   "ago": "hace",
   "copyText": "Copiar Texto",

@@ -1,13 +1,13 @@
 {
   "title": "Why Choose Ujtö̀?",
-  "subtitle": "Experience the fastest, most accurate video transcription service powered by advanced AI technology.",
+  "subtitle": "Accurate video transcription powered by open-source AI.",
   "fast": {
     "title": "Lightning Fast",
     "desc": "Get your video transcriptions in seconds, not minutes. Our optimized AI processes videos up to 10x faster than competitors with instant access to your complete transcription history."
   },
   "accurate": {
-    "title": "99% Accuracy",
-    "desc": "Industry-leading accuracy with support for multiple languages and accents. Perfect transcriptions every time, all saved in your personal history dashboard."
+    "title": "Accurate transcripts",
+    "desc": "Powered by the open-source Whisper speech-recognition model, with punctuation and support for many languages and accents. Every transcript is saved to your personal history."
   },
   "secure": {
     "title": "Complete History",

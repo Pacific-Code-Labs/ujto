@@ -1,13 +1,13 @@
 {
   "title": "¿Por qué elegir Ujtö̀?",
-  "subtitle": "Experimenta el servicio de transcripción de video más rápido y preciso impulsado por tecnología IA avanzada.",
+  "subtitle": "Transcripción de video precisa con IA de código abierto.",
   "fast": {
     "title": "Súper Rápido",
     "desc": "Obtén tus transcripciones de video en segundos, no minutos. Nuestra IA optimizada procesa videos hasta 10 veces más rápido que la competencia con acceso instantáneo a tu historial completo."
   },
   "accurate": {
-    "title": "99% Precisión",
-    "desc": "Precisión líder en la industria con soporte para múltiples idiomas y acentos. Transcripciones perfectas cada vez, todas guardadas en tu panel de historial personal."
+    "title": "Transcripciones precisas",
+    "desc": "Con el modelo de reconocimiento de voz de código abierto Whisper, con puntuación y soporte para muchos idiomas y acentos. Cada transcripción queda guardada en tu historial."
   },
   "secure": {
     "title": "Historial Completo",
