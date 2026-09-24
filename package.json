@@ -8,8 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "tsc",
-    "check:i18n": "node scripts/check-i18n.mjs",
-    "prebuild": "node scripts/check-i18n.mjs"
+    "check:i18n": "node scripts/check-i18n.mjs && node scripts/find-hardcoded-text.mjs",
+    "prebuild": "npm run check:i18n"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

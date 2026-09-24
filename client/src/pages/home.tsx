@@ -450,7 +450,7 @@ export default function Home() {
                     className="w-full mt-auto" 
                     onClick={() => navigate(`/${language}/login`)}
                   >
-                    Sign In
+                    {t("auth.signIn")}
                   </Button>
                 )}
               </CardContent>
@@ -496,7 +496,7 @@ export default function Home() {
                   </ul>
                 </div>
                 <Button className="w-full bg-gray-400 hover:bg-gray-400 text-gray-600 cursor-not-allowed mt-auto" disabled>
-                  Coming Soon
+                  {t("common.comingSoon")}
                 </Button>
               </CardContent>
             </Card>

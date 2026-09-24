@@ -16,5 +16,7 @@
   "oneTime": "Pago único por las funciones Pro",
   "paypalUnavailable": "PayPal no está disponible temporalmente",
   "payWithPaypal": "Pagar con PayPal",
-  "completePurchase": "Completa tu compra"
+  "completePurchase": "Completa tu compra",
+  "planName": "Plan {name}",
+  "perMonth": "/mes"
 }

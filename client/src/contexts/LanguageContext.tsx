@@ -47,6 +47,22 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  // Keep <html lang> in sync for screen readers, hyphenation and browser translation
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.title = translations[language]["meta.title"] ?? document.title;
+    const description = translations[language]["meta.description"];
+    if (description) {
+      let tag = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+      if (!tag) {
+        tag = document.createElement("meta");
+        tag.name = "description";
+        document.head.appendChild(tag);
+      }
+      tag.content = description;
+    }
+  }, [language]);
+
   const t = (key: string): string => {
     return translations[language][key] || key;
   };
