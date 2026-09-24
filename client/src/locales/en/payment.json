@@ -13,10 +13,10 @@
   "settingUp": "Setting up payment...",
   "setupErrorTitle": "Payment Setup Error",
   "setupErrorDesc": "Unable to setup payment. Please try again.",
-  "oneTime": "One-time payment for Pro features",
   "paypalUnavailable": "PayPal temporarily unavailable",
   "payWithPaypal": "Pay with PayPal",
   "completePurchase": "Complete Your Purchase",
   "planName": "{name} Plan",
-  "perMonth": "/month"
+  "perMonth": "/month",
+  "billedMonthly": "Billed monthly · cancel anytime"
 }

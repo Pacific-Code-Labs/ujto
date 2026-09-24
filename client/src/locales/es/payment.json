@@ -13,10 +13,10 @@
   "settingUp": "Preparando el pago...",
   "setupErrorTitle": "Error al preparar el pago",
   "setupErrorDesc": "No se pudo preparar el pago. Inténtalo de nuevo.",
-  "oneTime": "Pago único por las funciones Pro",
   "paypalUnavailable": "PayPal no está disponible temporalmente",
   "payWithPaypal": "Pagar con PayPal",
   "completePurchase": "Completa tu compra",
   "planName": "Plan {name}",
-  "perMonth": "/mes"
+  "perMonth": "/mes",
+  "billedMonthly": "Facturación mensual · cancela cuando quieras"
 }

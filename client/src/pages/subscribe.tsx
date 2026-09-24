@@ -12,6 +12,7 @@ import { useLocation } from "wouter";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 import { STRIPE_PUBLIC_KEY } from "@/lib/config";
+import { PRO_PRICE_USD, formatUsd } from "@/lib/plans";
 
 // Make sure to call `loadStripe` outside of a component's render to avoid
 // recreating the `Stripe` object on every render.
@@ -159,7 +160,7 @@ export default function Subscribe() {
               <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 mb-6">
                 <div className="text-center mb-4">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{t('subscription.planTitle')}</h3>
-                  <p className="text-3xl font-bold text-primary">$15<span className="text-lg text-gray-600 dark:text-gray-400">{t('subscription.month')}</span></p>
+                  <p className="text-3xl font-bold text-primary">{formatUsd(PRO_PRICE_USD)}<span className="text-lg text-gray-600 dark:text-gray-400">{t('subscription.month')}</span></p>
                 </div>
                 
                 <ul className="space-y-3">
@@ -269,7 +270,7 @@ export default function Subscribe() {
             <div className="text-center">
               <div className="bg-gray-50 rounded-lg p-4 mt-4">
                 <h3 className="font-semibold text-gray-900 dark:text-white">{t('subscription.planTitle')}</h3>
-                <p className="text-3xl font-bold text-primary">$19{t('subscription.month')}</p>
+                <p className="text-3xl font-bold text-primary">{formatUsd(PRO_PRICE_USD)}{t('subscription.month')}</p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{t('subscription.subscriptionFor')} {email}</p>
               </div>
             </div>

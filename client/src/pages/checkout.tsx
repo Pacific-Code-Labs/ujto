@@ -10,6 +10,7 @@ import { useLocation } from "wouter";
 
 import { STRIPE_PUBLIC_KEY } from "@/lib/config";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { PRO_PRICE_USD, formatUsd } from "@/lib/plans";
 
 // Make sure to call `loadStripe` outside of a component's render to avoid
 // recreating the `Stripe` object on every render.
@@ -101,7 +102,7 @@ export default function Checkout() {
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     // TODO(payments): backend returns 501 until payments are ported
-    apiRequest("POST", "/api/payments/create-payment-intent", { amount: 19.00 })
+    apiRequest("POST", "/api/payments/create-payment-intent", { amount: PRO_PRICE_USD })
       .then((data) => {
         setClientSecret(data.clientSecret);
         setIsLoading(false);
@@ -158,8 +159,8 @@ export default function Checkout() {
             <div className="text-center">
               <div className="bg-gray-50 rounded-lg p-4 mt-4">
                 <h3 className="font-semibold text-gray-900">{t("subscription.planTitle")}</h3>
-                <p className="text-3xl font-bold text-primary">$19.00</p>
-                <p className="text-sm text-gray-600">{t("payment.oneTime")}</p>
+                <p className="text-3xl font-bold text-primary">{formatUsd(PRO_PRICE_USD)}{t("payment.perMonth")}</p>
+                <p className="text-sm text-gray-600">{t("payment.billedMonthly")}</p>
               </div>
             </div>
           </CardHeader>

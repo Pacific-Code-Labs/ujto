@@ -19,6 +19,7 @@ import { useLocation } from "wouter";
 import { queryClient } from "@/lib/queryClient";
 import { createTranscription, queryKeys } from "@/lib/api";
 import { useUsage } from "@/hooks/useUsage";
+import { PRO_PRICE_USD, formatUsd } from "@/lib/plans";
 
 interface Transcription {
   id: string;
@@ -464,7 +465,7 @@ export default function Home() {
               <CardContent className="p-8 flex-grow flex flex-col">
                 <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{t('pricing.pro.title')}</h3>
-                  <div className="text-4xl font-bold text-gray-500 dark:text-gray-400 mb-2">$15</div>
+                  <div className="text-4xl font-bold text-gray-500 dark:text-gray-400 mb-2">{formatUsd(PRO_PRICE_USD)}</div>
                   <p className="text-gray-600 dark:text-gray-300">{t('pricing.pro.subtitle')}</p>
                 </div>
                 <div className="flex-grow">
