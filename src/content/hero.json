@@ -1,0 +1,34 @@
+{
+  "eyebrow": {
+    "en": "From video to word",
+    "es": "Del video a la palabra"
+  },
+  "title": {
+    "en": "Transform videos to text",
+    "es": "Convierte videos a texto"
+  },
+  "highlight": {
+    "en": "in minutes",
+    "es": "en minutos"
+  },
+  "description": {
+    "en": "Upload a video or audio file and get an accurate, timestamped transcript powered by the open-source Whisper model. Perfect for content creators, students and professionals.",
+    "es": "Sube un archivo de video o audio y obtén una transcripción precisa y con marcas de tiempo, impulsada por el modelo de código abierto Whisper. Ideal para creadores de contenido, estudiantes y profesionales."
+  },
+  "uploadLabel": {
+    "en": "Upload a file",
+    "es": "Subir un archivo"
+  },
+  "linkPlaceholder": {
+    "en": "…or paste a video link (YouTube, Vimeo, etc.)",
+    "es": "…o pega un enlace de video (YouTube, Vimeo, etc.)"
+  },
+  "linkLabel": {
+    "en": "Transcribe",
+    "es": "Transcribir"
+  },
+  "note": {
+    "en": "3 free transcriptions per day · no credit card",
+    "es": "3 transcripciones gratis por día · sin tarjeta"
+  }
+}

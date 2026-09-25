@@ -1,0 +1,32 @@
+{
+  "links": [
+    {
+      "section": "features",
+      "label": {
+        "en": "Features",
+        "es": "Características"
+      }
+    },
+    {
+      "section": "pricing",
+      "label": {
+        "en": "Pricing",
+        "es": "Precios"
+      }
+    },
+    {
+      "section": "download",
+      "label": {
+        "en": "Download",
+        "es": "Descargar"
+      }
+    },
+    {
+      "section": "story",
+      "label": {
+        "en": "Our name",
+        "es": "El nombre"
+      }
+    }
+  ]
+}

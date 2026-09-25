@@ -5,10 +5,10 @@ import fs from "node:fs";
 import path from "node:path";
 import ts from "typescript";
 
-const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..", "client", "src");
+const root = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..", "src");
 // Brand names / symbols that are the same in every language.
 const ALLOW = new Set(["Ujtö̀", "VideoScript", "STRIPE", "Stripe", "PayPal", "EN", "ES", "∞", "…", "$19.00", "$19", "404"]);
-const SKIP_DIRS = new Set(["locales", "ui"]);
+const SKIP_DIRS = new Set(["translations", "content"]);
 const SKIP_FILES = new Set(["DebugInfo.tsx"]);
 const USER_ATTRS = new Set(["title", "placeholder", "aria-label", "alt", "label"]);
 const USER_PROPS = new Set(["title", "description", "message", "label"]);
@@ -65,7 +65,7 @@ function scan(file) {
 })(root);
 
 if (findings.length) {
-  console.error(`Hard-coded user-visible text (${findings.length}) — move it to client/src/locales:\n  ` + findings.join("\n  "));
+  console.error(`Hard-coded user-visible text (${findings.length}) — move it to src/translations (chrome) or src/content (editable copy):\n  ` + findings.join("\n  "));
   process.exit(1);
 }
 console.log("No hard-coded user-visible text found.");

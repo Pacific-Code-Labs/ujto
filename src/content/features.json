@@ -1,0 +1,84 @@
+{
+  "title": {
+    "en": "Why choose Ujtö̀?",
+    "es": "¿Por qué elegir Ujtö̀?"
+  },
+  "subtitle": {
+    "en": "Accurate video transcription powered by open-source AI.",
+    "es": "Transcripción de video precisa con IA de código abierto."
+  },
+  "items": [
+    {
+      "id": "upload",
+      "iconName": "upload",
+      "title": {
+        "en": "Upload anything",
+        "es": "Sube lo que quieras"
+      },
+      "description": {
+        "en": "MP4, MOV, MP3, M4A, WAV, WEBM… Your file goes straight to secure storage and is transcribed in minutes.",
+        "es": "MP4, MOV, MP3, M4A, WAV, WEBM… Tu archivo va directo a un almacenamiento seguro y se transcribe en minutos."
+      }
+    },
+    {
+      "id": "accurate",
+      "iconName": "target",
+      "title": {
+        "en": "Accurate transcripts",
+        "es": "Transcripciones precisas"
+      },
+      "description": {
+        "en": "Powered by the open-source Whisper speech-recognition model, with punctuation, timestamps and support for many languages and accents.",
+        "es": "Con el modelo de reconocimiento de voz de código abierto Whisper, con puntuación, marcas de tiempo y soporte para muchos idiomas y acentos."
+      }
+    },
+    {
+      "id": "private",
+      "iconName": "shield",
+      "title": {
+        "en": "Private by design",
+        "es": "Privado por diseño"
+      },
+      "description": {
+        "en": "Every uploaded file is deleted as soon as its transcription finishes. Only the text stays in your history.",
+        "es": "Cada archivo subido se elimina en cuanto termina su transcripción. Solo el texto queda en tu historial."
+      }
+    },
+    {
+      "id": "history",
+      "iconName": "history",
+      "title": {
+        "en": "Complete history",
+        "es": "Historial completo"
+      },
+      "description": {
+        "en": "Search, rename and download all your transcripts anytime as TXT, or SRT and VTT subtitles on Pro.",
+        "es": "Busca, renombra y descarga todas tus transcripciones cuando quieras en TXT, o subtítulos SRT y VTT en Pro."
+      }
+    },
+    {
+      "id": "desktop",
+      "iconName": "laptop",
+      "title": {
+        "en": "Desktop app for links",
+        "es": "App de escritorio para enlaces"
+      },
+      "description": {
+        "en": "Paste a YouTube link in the Ujtö̀ desktop app: it downloads the audio from your computer and sends it for you.",
+        "es": "Pega un enlace de YouTube en la app de escritorio de Ujtö̀: descarga el audio desde tu computadora y lo envía por ti."
+      }
+    },
+    {
+      "id": "languages",
+      "iconName": "languages",
+      "title": {
+        "en": "Many languages",
+        "es": "Muchos idiomas"
+      },
+      "description": {
+        "en": "The spoken language is detected automatically, in English, Spanish and dozens more.",
+        "es": "El idioma hablado se detecta automáticamente, en español, inglés y decenas más."
+      }
+    }
+  ]
+}

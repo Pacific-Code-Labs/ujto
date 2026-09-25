@@ -1,0 +1,46 @@
+{
+  "items": [
+    {
+      "id": "media-og-image",
+      "kind": "image",
+      "source": "local",
+      "path": "/og-image.jpg",
+      "filename": "og-image.jpg",
+      "mime": "image/jpeg",
+      "size": 0,
+      "alt": {
+        "en": "Ujtö̀ — from video to word",
+        "es": "Ujtö̀ — del video a la palabra"
+      },
+      "createdAt": "2026-09-24T00:00:00Z"
+    },
+    {
+      "id": "media-favicon-32",
+      "kind": "image",
+      "source": "local",
+      "path": "/icons/favicon-32.png",
+      "filename": "favicon-32.png",
+      "mime": "image/png",
+      "size": 0,
+      "alt": {
+        "en": "Ujtö̀ icon",
+        "es": "Ícono de Ujtö̀"
+      },
+      "createdAt": "2026-09-24T00:00:00Z"
+    },
+    {
+      "id": "media-icon-512",
+      "kind": "image",
+      "source": "local",
+      "path": "/icons/icon-512.png",
+      "filename": "icon-512.png",
+      "mime": "image/png",
+      "size": 0,
+      "alt": {
+        "en": "Ujtö̀ app icon",
+        "es": "Ícono de la app Ujtö̀"
+      },
+      "createdAt": "2026-09-24T00:00:00Z"
+    }
+  ]
+}

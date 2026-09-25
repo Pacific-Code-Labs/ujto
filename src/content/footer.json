@@ -1,0 +1,86 @@
+{
+  "description": {
+    "en": "AI-powered video transcription: turn any video or audio file into editable, searchable text.",
+    "es": "Transcripción de video con IA: convierte cualquier archivo de video o audio en texto editable y fácil de buscar."
+  },
+  "columns": [
+    {
+      "title": {
+        "en": "Product",
+        "es": "Producto"
+      },
+      "links": [
+        {
+          "kind": "section",
+          "target": "features",
+          "label": {
+            "en": "Features",
+            "es": "Características"
+          }
+        },
+        {
+          "kind": "section",
+          "target": "pricing",
+          "label": {
+            "en": "Pricing",
+            "es": "Precios"
+          }
+        },
+        {
+          "kind": "section",
+          "target": "download",
+          "label": {
+            "en": "Desktop app",
+            "es": "App de escritorio"
+          }
+        },
+        {
+          "kind": "app",
+          "target": "/",
+          "label": {
+            "en": "Open the dashboard",
+            "es": "Abrir el panel"
+          }
+        }
+      ]
+    },
+    {
+      "title": {
+        "en": "Support",
+        "es": "Soporte"
+      },
+      "links": [
+        {
+          "kind": "app",
+          "target": "/help",
+          "label": {
+            "en": "Help center",
+            "es": "Centro de ayuda"
+          }
+        }
+      ]
+    }
+  ],
+  "social": [
+    {
+      "iconName": "linkedin",
+      "href": "https://www.linkedin.com/in/jose-pablo-campos/",
+      "label": {
+        "en": "LinkedIn",
+        "es": "LinkedIn"
+      }
+    },
+    {
+      "iconName": "github",
+      "href": "https://github.com/chepelcr",
+      "label": {
+        "en": "GitHub",
+        "es": "GitHub"
+      }
+    }
+  ],
+  "copyright": {
+    "en": "© 2026 Ujtö̀. All rights reserved. Made with ❤️ for content creators worldwide.",
+    "es": "© 2026 Ujtö̀. Todos los derechos reservados. Hecho con ❤️ para creadores de contenido en todo el mundo."
+  }
+}
