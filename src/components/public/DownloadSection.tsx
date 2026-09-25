@@ -1,7 +1,7 @@
 import { Badge, Button, Card, CardContent, RichText, resolveIcon, useLanguage, useLocalized } from "@pacific-code-labs/ujto-ds";
 import { Download } from "lucide-react";
 import { getDownload } from "@/repositories/content.repository";
-import { downloadUrl, isDownloadAvailable, splitPlatforms } from "@/services/download.service";
+import { downloadUrl, isDownloadAvailable, usePlatformChoice } from "@/services/download.service";
 
 /** "Download the Ujtö̀ app": the visitor's installer first, the other platforms below. */
 export function DownloadSection() {
@@ -9,7 +9,7 @@ export function DownloadSection() {
   const L = useLocalized();
   const content = getDownload();
   const available = isDownloadAvailable();
-  const { primary, others } = splitPlatforms();
+  const { primary, others } = usePlatformChoice();
   const featured = primary ?? others[0];
   const rest = primary ? others : others.slice(1);
   const PrimaryIcon = resolveIcon(featured?.iconName);

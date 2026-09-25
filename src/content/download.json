@@ -14,6 +14,7 @@
       "os": "mac",
       "iconName": "laptop",
       "file": "Ujto-mac-arm64.dmg",
+      "arch": "arm64",
       "label": {
         "en": "macOS (Apple silicon)",
         "es": "macOS (Apple silicon)"
@@ -23,6 +24,7 @@
       "os": "mac",
       "iconName": "laptop",
       "file": "Ujto-mac-x64.dmg",
+      "arch": "x64",
       "label": {
         "en": "macOS (Intel)",
         "es": "macOS (Intel)"
@@ -32,6 +34,7 @@
       "os": "windows",
       "iconName": "monitor",
       "file": "Ujto-windows-x64.exe",
+      "arch": "x64",
       "label": {
         "en": "Windows 10/11",
         "es": "Windows 10/11"
@@ -41,6 +44,7 @@
       "os": "linux",
       "iconName": "monitor",
       "file": "Ujto-linux-x64.AppImage",
+      "arch": "x64",
       "label": {
         "en": "Linux (AppImage)",
         "es": "Linux (AppImage)"
@@ -50,6 +54,7 @@
       "os": "linux",
       "iconName": "monitor",
       "file": "Ujto-linux-amd64.deb",
+      "arch": "x64",
       "label": {
         "en": "Linux (.deb, Ubuntu/Debian)",
         "es": "Linux (.deb, Ubuntu/Debian)"
