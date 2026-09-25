@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Materialize the web app's public build configuration from SSM.
+# Materialize the landing's public build configuration from SSM (only the dashboard URL).
 # Every value under this path is baked into the static site (public by design).
 # Usage: bash scripts/load-env-from-ssm.sh [environment] [profile|-] [--output path|--github-env|--print-exports]
 #   --print-exports  print `export VAR=value` lines on stdout and write no file; local dev uses
@@ -67,31 +67,16 @@ add_line() {
   echo "  ${variable} <- ${BASE_PATH}/${key}" >&2
 }
 
-MISSING=0
-while IFS=':' read -r variable key; do
-  if value="$(get_parameter "${key}")"; then
-    add_line "${variable}" "${key}" "${value}"
-  else
-    echo "Missing required parameter ${BASE_PATH}/${key}" >&2
-    MISSING=1
-  fi
-done <<'MAP'
-VITE_AWS_REGION:aws/region
-VITE_API_BASE_URL:api/url
-VITE_AWS_COGNITO_USER_POOL_ID:cognito/user-pool-id
-VITE_AWS_COGNITO_CLIENT_ID:cognito/client-id
-MAP
-
-[[ "${MISSING}" -eq 0 ]] || exit 1
-
-if value="$(get_parameter 'stripe/public-key')"; then
-  add_line VITE_STRIPE_PUBLIC_KEY stripe/public-key "${value}"
+# The landing is static and public: it needs no Cognito, API or payment settings.
+# Its only config is where the dashboard lives (optional: the code defaults to prod).
+if value="$(get_parameter 'site/app-url')"; then
+  add_line VITE_APP_URL site/app-url "${value}"
 else
-  echo "Optional parameter ${BASE_PATH}/stripe/public-key is absent; payments stay disabled." >&2
+  echo "Optional parameter ${BASE_PATH}/site/app-url is absent; using the default dashboard URL." >&2
 fi
 
 if [[ "${OUTPUT_MODE}" == "exports" ]]; then
-  for line in "${CONFIG_LINES[@]}"; do
+  for line in ${CONFIG_LINES[@]+"${CONFIG_LINES[@]}"}; do
     printf 'export %s=%q\n' "${line%%=*}" "${line#*=}"
   done
   exit 0
@@ -99,13 +84,13 @@ fi
 
 umask 077
 if [[ "${OUTPUT_MODE}" == "append" ]]; then
-  printf '%s\n' "${CONFIG_LINES[@]}" >> "${OUTPUT_FILE}"
+  printf "%s\n" ${CONFIG_LINES[@]+"${CONFIG_LINES[@]}"} >> "${OUTPUT_FILE}"
 else
   mkdir -p "$(dirname "${OUTPUT_FILE}")"
   TEMP_FILE="$(mktemp "${OUTPUT_FILE}.tmp.XXXXXX")"
   {
     printf '# Generated from %s; do not edit or commit.\n' "${BASE_PATH}"
-    printf '%s\n' "${CONFIG_LINES[@]}"
+    printf '%s\n' ${CONFIG_LINES[@]+"${CONFIG_LINES[@]}"}
   } > "${TEMP_FILE}"
   mv "${TEMP_FILE}" "${OUTPUT_FILE}"
 fi

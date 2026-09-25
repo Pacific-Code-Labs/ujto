@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1F5F63" />
+    <title>Ujtö̀ — From video to word</title>
+    <meta name="description" content="Upload any video or audio file and get an accurate transcript in minutes. 3 free transcriptions per day." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ujtö̀" />
+    <meta property="og:title" content="Ujtö̀ — From video to word" />
+    <meta property="og:description" content="Upload any video or audio file and get an accurate transcript in minutes." />
+    <meta property="og:url" content="https://ujto.jcampos.dev/" />
+    <meta property="og:image" content="https://ujto.jcampos.dev/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="675" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://ujto.jcampos.dev/og-image.jpg" />
+  </head>
+  <body>
+    <script type="text/javascript">
+      // Single Page Apps for GitHub Pages
+      // MIT License
+      // https://github.com/rafgraph/spa-github-pages
+      // This script checks to see if a redirect is present in the query string,
+      // converts it back into the correct url and adds it to the
+      // browser's history using window.history.replaceState(...)
+      
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null, decoded + l.hash);
+        }
+      }(window.location))
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

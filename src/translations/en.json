@@ -1,0 +1,40 @@
+{
+  "common": {
+    "signIn": "Sign in",
+    "getStarted": "Get started",
+    "comingSoon": "Coming soon",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "newTab": "opens in a new tab"
+  },
+  "theme": {
+    "toggle": "Toggle theme"
+  },
+  "language": {
+    "switchTo": "Cambiar a español"
+  },
+  "hero": {
+    "linkLabel": "Video link"
+  },
+  "pricing": {
+    "startFree": "Start free",
+    "popular": "Most popular"
+  },
+  "testimonials": {
+    "rating": "{{count}} out of 5 stars"
+  },
+  "download": {
+    "button": "Download",
+    "yourSystem": "Your system",
+    "otherPlatforms": "Other platforms",
+    "nav": "Download app"
+  },
+  "story": {
+    "source": "Source"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for doesn't exist.",
+    "goHome": "Go to the home page"
+  }
+}

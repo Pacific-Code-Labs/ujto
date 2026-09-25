@@ -1,0 +1,88 @@
+{
+  "title": {
+    "en": "Simple, transparent pricing",
+    "es": "Precios simples y transparentes"
+  },
+  "subtitle": {
+    "en": "Start free, upgrade when you need more.",
+    "es": "Comienza gratis y mejora cuando necesites más."
+  },
+  "plans": [
+    {
+      "code": "free",
+      "status": "available",
+      "highlighted": false,
+      "name": {
+        "en": "Free",
+        "es": "Gratis"
+      },
+      "price": "$0",
+      "period": {
+        "en": "Perfect for trying out",
+        "es": "Perfecto para probar"
+      },
+      "features": [
+        {
+          "en": "3 transcriptions per day",
+          "es": "3 transcripciones por día"
+        },
+        {
+          "en": "Up to 10 minutes per video",
+          "es": "Hasta 10 minutos por video"
+        },
+        {
+          "en": "Uploads up to 500 MB",
+          "es": "Archivos de hasta 500 MB"
+        },
+        {
+          "en": "Standard accuracy",
+          "es": "Precisión estándar"
+        },
+        {
+          "en": "Download as TXT",
+          "es": "Descarga en TXT"
+        }
+      ]
+    },
+    {
+      "code": "pro",
+      "status": "coming-soon",
+      "highlighted": true,
+      "name": {
+        "en": "Pro",
+        "es": "Pro"
+      },
+      "price": "$15",
+      "period": {
+        "en": "per month",
+        "es": "por mes"
+      },
+      "features": [
+        {
+          "en": "Unlimited transcriptions",
+          "es": "Transcripciones ilimitadas"
+        },
+        {
+          "en": "Up to 2 hours per video",
+          "es": "Hasta 2 horas por video"
+        },
+        {
+          "en": "Uploads up to 2 GB",
+          "es": "Archivos de hasta 2 GB"
+        },
+        {
+          "en": "Enhanced accuracy (larger AI model)",
+          "es": "Precisión mejorada (modelo de IA más grande)"
+        },
+        {
+          "en": "Multiple formats (TXT, SRT, VTT)",
+          "es": "Múltiples formatos (TXT, SRT, VTT)"
+        },
+        {
+          "en": "Priority processing and email support",
+          "es": "Procesamiento prioritario y soporte por correo"
+        }
+      ]
+    }
+  ]
+}

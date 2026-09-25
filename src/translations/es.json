@@ -1,0 +1,40 @@
+{
+  "common": {
+    "signIn": "Iniciar sesión",
+    "getStarted": "Comenzar",
+    "comingSoon": "Próximamente",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "newTab": "se abre en una pestaña nueva"
+  },
+  "theme": {
+    "toggle": "Cambiar tema"
+  },
+  "language": {
+    "switchTo": "Switch to English"
+  },
+  "hero": {
+    "linkLabel": "Enlace del video"
+  },
+  "pricing": {
+    "startFree": "Comenzar gratis",
+    "popular": "Más popular"
+  },
+  "testimonials": {
+    "rating": "{{count}} de 5 estrellas"
+  },
+  "download": {
+    "button": "Descargar",
+    "yourSystem": "Tu sistema",
+    "otherPlatforms": "Otras plataformas",
+    "nav": "Descargar app"
+  },
+  "story": {
+    "source": "Fuente"
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe.",
+    "goHome": "Ir al inicio"
+  }
+}

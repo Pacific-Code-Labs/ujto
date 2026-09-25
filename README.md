@@ -1,39 +1,48 @@
-# Ujtö̀ — Web App
+# ujto — landing
 
-React + TypeScript frontend for **Ujtö̀** (“word; language” in Bribri — the name story is shown on the register page), deployed as a static site to GitHub Pages.
+The public landing for **Ujtö̀** (“word; language” in Bribri) at **https://ujto.jcampos.dev**.
+A static, content-driven site (landing-DXP pattern): every visible string and image comes from
+`src/content/*.json` (editable in the private **ujto-admin** CMS) or `src/translations/{en,es}.json`.
 
-The backend lives in separate repositories:
-- API: `Pacific-Code-Labs/ujto-be` (FastAPI on AWS Lambda)
-- Transcription worker: `Pacific-Code-Labs/ujto-listener-be`
+The product itself lives elsewhere:
+- Dashboard: [ujto-app](https://github.com/Pacific-Code-Labs/ujto-app) → https://app.ujto.jcampos.dev
+  (**Sign in**, **Get started**, **Upload a file** and the link box open it in a new tab)
+- Shared UI: [ujto-design-system](https://github.com/Pacific-Code-Labs/ujto-design-system)
+- Desktop app: [ujto-desktop](https://github.com/Pacific-Code-Labs/ujto-desktop) (the **Download** section)
+- Workspace: [ujto-root](https://github.com/Pacific-Code-Labs/ujto-root) (`fe/landing`)
 
-## Features
+## Structure
 
-- Paste a video URL and get a transcript
-- Free plan: 3 transcriptions per account (paid plans coming soon)
-- English and Spanish UI with light/dark mode
-- Sign-up and login with Amazon Cognito
-
-## Development
-
-```bash
-npm install
-bash scripts/load-env-from-ssm.sh prod   # writes .env.local from SSM (needs AWS access)
-npm run dev                              # http://localhost:5173
+```
+src/
+  content/        hero, features, pricing, download, testimonials, story, navigation, footer,
+                  seo, branding, themes, media  (bilingual { en, es } values)
+  translations/   fixed UI chrome (button labels, aria labels)
+  repositories/   content.repository.ts — the only importer of content JSON
+  services/       download (OS detection), seo (head tags, brand theme)
+  components/public/  one component per section; pages/Home.tsx renders them in order
+scripts/          check-i18n, find-hardcoded-text, prerender (per-language × section HTML + sitemap)
 ```
 
-| Script | What it does |
-|---|---|
-| `npm run dev` | Vite dev server |
-| `npm run build` | Production build to `dist/public` |
-| `npm run preview` | Serve the production build locally |
-| `npm run check` | TypeScript type check |
+URLs are `/<lang>` and `/<lang>/<section>` (`features`, `pricing`, `download`, `testimonials`,
+`story`); a scroll-spy keeps the URL on the section in view. Old app URLs (`/en/login`,
+`/en/dashboard`, …) redirect to the dashboard.
 
-## Deployment
+## Develop
 
-Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages (custom domain from `client/public/CNAME`).
+```bash
+pnpm install
+pnpm dev          # http://localhost:5173
+pnpm build        # checks + typecheck + build + prerender → dist/
+```
 
-Build-time values (`VITE_*`) are read from AWS SSM Parameter Store at `/ujto/<env>/web/*` by `scripts/load-env-from-ssm.sh`, both locally and in the Pages workflow. The workflow assumes a read-only role through GitHub OIDC; its ARN is the only repository secret (`AWS_WEB_BUILD_ROLE_ARN`). These values ship to the browser, so they are public identifiers — never store secret keys under that path.
+From the workspace root, `./reboot-server.sh` starts everything with the local dashboard URL.
 
-Without AWS access, copy `.env.example` to `.env.local` and fill it in by hand.
+## Config
 
-See [GITHUB_PAGES_SETUP.md](GITHUB_PAGES_SETUP.md) for Pages and DNS setup.
+The site has **no runtime backend and no auth**. Its only build setting is the dashboard URL
+(`VITE_APP_URL`, from SSM `/ujto/<env>/web/site/app-url`; defaults to the prod domain).
+
+## Deploy
+
+Push to `main` → GitHub Actions (pnpm, Node 24) → `pnpm build` → GitHub Pages (`public/CNAME`).

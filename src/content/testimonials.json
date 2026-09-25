@@ -1,0 +1,54 @@
+{
+  "title": {
+    "en": "Trusted by content creators worldwide",
+    "es": "Confiado por creadores de contenido en todo el mundo"
+  },
+  "subtitle": {
+    "en": "Join the people who rely on Ujtö̀ for their transcription needs.",
+    "es": "Únete a quienes confían en Ujtö̀ para sus transcripciones."
+  },
+  "items": [
+    {
+      "id": "sarah",
+      "name": "Sarah Johnson",
+      "initials": "SJ",
+      "rating": 5,
+      "role": {
+        "en": "YouTube Creator",
+        "es": "Creadora de YouTube"
+      },
+      "quote": {
+        "en": "Ujtö̀ has revolutionized my content creation workflow. The accuracy is incredible and it saves me hours of manual transcription work every week.",
+        "es": "Ujtö̀ ha revolucionado mi flujo de trabajo de creación de contenido. La precisión es increíble y me ahorra horas de trabajo de transcripción manual cada semana."
+      }
+    },
+    {
+      "id": "mike",
+      "name": "Mike Chen",
+      "initials": "MC",
+      "rating": 5,
+      "role": {
+        "en": "University Student",
+        "es": "Estudiante universitario"
+      },
+      "quote": {
+        "en": "As a student, Ujtö̀ helps me convert lecture videos to text for better studying. The free tier is perfect for my needs.",
+        "es": "Como estudiante, Ujtö̀ me ayuda a convertir videos de conferencias a texto para estudiar mejor. El nivel gratuito es perfecto para mis necesidades."
+      }
+    },
+    {
+      "id": "lisa",
+      "name": "Lisa Rodriguez",
+      "initials": "LR",
+      "rating": 5,
+      "role": {
+        "en": "Training Manager",
+        "es": "Gerente de capacitación"
+      },
+      "quote": {
+        "en": "The accuracy and speed are unmatched. We use Ujtö̀ for all our corporate training materials and the results are consistently excellent.",
+        "es": "La precisión y velocidad son incomparables. Usamos Ujtö̀ para todos nuestros materiales de capacitación y los resultados son consistentemente excelentes."
+      }
+    }
+  ]
+}

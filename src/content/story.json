@@ -1,0 +1,29 @@
+{
+  "title": {
+    "en": "Where the name comes from",
+    "es": "El origen del nombre"
+  },
+  "paragraphs": [
+    {
+      "en": "Ujtö̀ means “word” —and also “language”— in Bribri, the language of the Bribri people of Talamanca, Costa Rica.",
+      "es": "Ujtö̀ significa «palabra» —y también «idioma»— en bribri, la lengua del pueblo bribri de Talamanca, Costa Rica."
+    },
+    {
+      "en": "Bribri is a tonal language: the diaeresis marks a vowel of its own, and the grave accent a falling tone. That is why we write Ujtö̀ with all its marks.",
+      "es": "El bribri es una lengua tonal: la diéresis marca una vocal propia del bribri y el acento grave, un tono descendente. Por eso escribimos Ujtö̀ con todas sus marcas."
+    },
+    {
+      "en": "We chose it because that is what we do: turn the voice in a video into words you can read, keep and share. From video to word.",
+      "es": "Lo elegimos porque eso es lo que hacemos: transformar la voz de un video en palabras que se pueden leer, guardar y compartir. Del video a la palabra."
+    }
+  ],
+  "attribution": {
+    "en": "Inspired, with respect, by the Bribri language of Talamanca, Costa Rica.",
+    "es": "Inspirado, con respeto, en la lengua bribri de Talamanca, Costa Rica."
+  },
+  "source": {
+    "en": "Meaning per the Bribri–Spanish Dictionary of the Universidad de Costa Rica",
+    "es": "Significado según el Diccionario bribri–español de la Universidad de Costa Rica"
+  },
+  "sourceUrl": "https://www.haakonkrohn.com/bribri/"
+}
