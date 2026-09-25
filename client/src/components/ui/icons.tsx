@@ -12,11 +12,17 @@ import {
   Download,
   ExternalLink,
   Clock,
-  BarChart3
+  BarChart3,
+  Upload,
+  FileAudio,
+  Link2
 } from "lucide-react";
 
 export const Icons = {
   spinner: Loader2,
+  upload: Upload,
+  fileAudio: FileAudio,
+  link: Link2,
   user: User,
   fileText: FileText,
   menu: Menu,

@@ -3,10 +3,12 @@
 export interface Transcription {
   id: string;
   userId: string;
-  videoUrl: string;
+  videoUrl: string; // empty for uploaded files
+  sourceType: "url" | "upload";
+  originalFilename?: string;
   videoTitle?: string;
   transcript: string;
-  status: "pending" | "processing" | "completed" | "failed" | string;
+  status: "awaiting_upload" | "pending" | "processing" | "completed" | "failed" | string;
   duration: number;
   wordCount: number;
   processingTime: number;

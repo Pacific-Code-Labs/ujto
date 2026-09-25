@@ -32,6 +32,8 @@ import { LanguageToggle } from "@/components/LanguageToggle";
 import { NotificationDropdown } from "@/components/NotificationDropdown";
 import { SiYoutube, SiVimeo } from "react-icons/si";
 import { BrandLogo } from "@/components/BrandLogo";
+import { UploadTranscriptionForm } from "@/components/upload-transcription-form";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 
 
@@ -241,6 +243,12 @@ export default function Dashboard() {
     navigate(`/${language}/`);
   };
 
+  const refreshAfterQueue = () => {
+    queryClient.invalidateQueries({ queryKey: queryKeys.transcriptions(user?.id) });
+    queryClient.invalidateQueries({ queryKey: queryKeys.profile });
+    queryClient.invalidateQueries({ queryKey: queryKeys.usage(user?.id) });
+  };
+
   const handleTranscribe = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -278,9 +286,7 @@ export default function Dashboard() {
 
       // Clear form and refresh data
       setVideoUrl("");
-      queryClient.invalidateQueries({ queryKey: queryKeys.transcriptions(user?.id) });
-      queryClient.invalidateQueries({ queryKey: queryKeys.profile });
-      queryClient.invalidateQueries({ queryKey: queryKeys.usage(user?.id) });
+      refreshAfterQueue();
     } catch (error: any) {
       console.error("Transcription creation error:", error);
       toast({
@@ -318,6 +324,12 @@ export default function Dashboard() {
         return (
           <Badge variant="destructive" className="text-xs">
             {t("status.failed")}
+          </Badge>
+        );
+      case "awaiting_upload":
+        return (
+          <Badge variant="secondary" className="text-xs">
+            {t("status.awaitingUpload")}
           </Badge>
         );
       case "pending":
@@ -446,45 +458,84 @@ export default function Dashboard() {
               </Alert>
             )}
 
-            <form onSubmit={handleTranscribe} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="videoUrl">{t("transcription.videoUrl")}</Label>
-                <Input
-                  id="videoUrl"
-                  type="url"
-                  placeholder={t("transcription.videoUrlPlaceholder")}
-                  value={videoUrl}
-                  onChange={(e) => setVideoUrl(e.target.value)}
-                  disabled={isTranscribing || isLimitReached}
-                  className="w-full"
-                />
-              </div>
+            <Tabs defaultValue="upload">
+              <TabsList className="mb-4 grid w-full grid-cols-2 sm:inline-flex sm:w-auto">
+                <TabsTrigger value="upload" className="gap-2">
+                  <Icons.upload className="h-4 w-4" />
+                  {t("upload.tab")}
+                </TabsTrigger>
+                <TabsTrigger value="link" className="gap-2">
+                  <Icons.link className="h-4 w-4" />
+                  {t("upload.linkTab")}
+                </TabsTrigger>
+              </TabsList>
 
-              <div className="flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center">
+              <TabsContent value="upload" className="space-y-3">
+                <p className="text-sm text-muted-foreground">{t("upload.description")}</p>
+                <UploadTranscriptionForm
+                  userId={user!.id}
+                  maxUploadBytes={usage?.maxUploadBytes ?? 500 * 1024 * 1024}
+                  maxVideoSeconds={usage?.maxVideoSeconds ?? 600}
+                  disabled={isLimitReached || !usage}
+                  onQueued={(created) => {
+                    toast({
+                      title: t("transcription.queued.title"),
+                      description: t("transcription.queued.description").replace("{{title}}", created.videoTitle || ""),
+                    });
+                    refreshAfterQueue();
+                  }}
+                  onError={(message) =>
+                    toast({ title: t("transcription.error.title"), description: message, variant: "destructive" })
+                  }
+                />
                 <div className="text-sm text-gray-600 dark:text-gray-400">
                   {t("dashboard.dailyUsage")}: {dailyUsage} / {dailyLimit}
                 </div>
+              </TabsContent>
 
-                <div className="flex gap-2">
-                  <Button
-                    type="submit"
-                    disabled={
-                      !videoUrl.trim() || isTranscribing || isLimitReached
-                    }
-                    className="flex-1 sm:flex-none"
-                  >
-                    {isTranscribing ? (
-                      <>
-                        <Icons.spinner className="h-4 w-4 animate-spin mr-2" />
-                        {t("transcription.processing")}
-                      </>
-                    ) : (
-                      t("hero.transcribe")
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </form>
+              <TabsContent value="link" className="space-y-3">
+                <p className="text-sm text-muted-foreground">{t("upload.linkDescription")}</p>
+                <form onSubmit={handleTranscribe} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="videoUrl">{t("transcription.videoUrl")}</Label>
+                    <Input
+                      id="videoUrl"
+                      type="url"
+                      placeholder={t("transcription.videoUrlPlaceholder")}
+                      value={videoUrl}
+                      onChange={(e) => setVideoUrl(e.target.value)}
+                      disabled={isTranscribing || isLimitReached}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-3 sm:justify-between sm:items-center">
+                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                      {t("dashboard.dailyUsage")}: {dailyUsage} / {dailyLimit}
+                    </div>
+
+                    <div className="flex gap-2">
+                      <Button
+                        type="submit"
+                        disabled={
+                          !videoUrl.trim() || isTranscribing || isLimitReached
+                        }
+                        className="flex-1 sm:flex-none"
+                      >
+                        {isTranscribing ? (
+                          <>
+                            <Icons.spinner className="h-4 w-4 animate-spin mr-2" />
+                            {t("transcription.processing")}
+                          </>
+                        ) : (
+                          t("hero.transcribe")
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                </form>
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
 
@@ -598,7 +649,11 @@ export default function Dashboard() {
                         >
                           {/* Video Title Row */}
                           <div className="flex items-center gap-2 min-w-0 mb-3">
-                            {getVideoProviderIcon(transcription.videoUrl)}
+                            {transcription.sourceType === "upload" ? (
+                              <Icons.fileAudio className="h-4 w-4 text-gray-500 flex-shrink-0" />
+                            ) : (
+                              getVideoProviderIcon(transcription.videoUrl)
+                            )}
                             <h4 className="text-sm font-medium text-gray-900 dark:text-white truncate flex-1 min-w-0">
                               {transcription.videoTitle ||
                                 getVideoTitle(transcription.videoUrl)}

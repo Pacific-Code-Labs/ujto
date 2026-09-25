@@ -75,7 +75,9 @@ interface ProfileDto {
 interface TranscriptionDto {
   transcription_id: string;
   owner_id: string;
-  video_url: string;
+  video_url: string | null;
+  source_type?: string;
+  original_filename?: string | null;
   video_title: string | null;
   transcript: string | null;
   transcription_status: string;
@@ -129,7 +131,9 @@ export function toTranscription(d: TranscriptionDto): Transcription {
   return {
     id: d.transcription_id,
     userId: d.owner_id,
-    videoUrl: d.video_url,
+    videoUrl: d.video_url ?? "",
+    sourceType: d.source_type === "upload" ? "upload" : "url",
+    originalFilename: d.original_filename ?? undefined,
     videoTitle: d.video_title ?? undefined,
     transcript: d.transcript ?? "",
     status: d.transcription_status,
@@ -192,6 +196,54 @@ export const getTranscription = async (userId: string, id: string) =>
 export const createTranscription = async (userId: string, videoUrl: string) =>
   toTranscription(await apiFetch<TranscriptionDto>("POST", `${u(userId)}/transcriptions`, { video_url: videoUrl }));
 
+// ---- File uploads: reserve a job, POST the file straight to S3, then start the job ----
+interface UploadDto {
+  transcription: TranscriptionDto;
+  upload: { url: string; fields: Record<string, string>; expires_in: number; max_bytes: number };
+}
+
+export interface UploadRequest {
+  filename: string;
+  contentType: string;
+  sizeBytes: number;
+  durationSeconds?: number;
+}
+
+export async function createUpload(userId: string, req: UploadRequest) {
+  const d = await apiFetch<UploadDto>("POST", `${u(userId)}/transcriptions/uploads`, {
+    filename: req.filename,
+    content_type: req.contentType,
+    size_bytes: req.sizeBytes,
+    ...(req.durationSeconds !== undefined && { duration_seconds: req.durationSeconds }),
+  });
+  return { transcription: toTranscription(d.transcription), upload: d.upload };
+}
+
+/** POST the file to the presigned S3 form, reporting progress as a 0-1 fraction. */
+export function uploadToStorage(
+  target: { url: string; fields: Record<string, string> },
+  file: File,
+  onProgress?: (fraction: number) => void,
+  signal?: AbortSignal,
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const form = new FormData();
+    Object.entries(target.fields).forEach(([k, v]) => form.append(k, v));
+    form.append("file", file); // S3 requires the file to be the last field
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", target.url);
+    xhr.upload.onprogress = (e) => e.lengthComputable && onProgress?.(e.loaded / e.total);
+    xhr.onload = () => (xhr.status >= 200 && xhr.status < 300 ? resolve() : reject(new ApiError(xhr.status, "UPLOAD_FAILED")));
+    xhr.onerror = () => reject(new ApiError(0, "UPLOAD_FAILED"));
+    xhr.onabort = () => reject(new ApiError(0, "UPLOAD_CANCELLED"));
+    signal?.addEventListener("abort", () => xhr.abort());
+    xhr.send(form);
+  });
+}
+
+export const startUpload = async (userId: string, id: string) =>
+  toTranscription(await apiFetch<TranscriptionDto>("POST", `${u(userId)}/transcriptions/${id}/start`));
+
 export const renameTranscription = async (userId: string, id: string, videoTitle: string) =>
   toTranscription(
     await apiFetch<TranscriptionDto>("PATCH", `${u(userId)}/transcriptions/${id}`, { video_title: videoTitle }),
@@ -225,6 +277,7 @@ export interface Usage {
   remainingToday: number | null; // null = unlimited
   resetsAt: string;
   maxVideoSeconds: number;
+  maxUploadBytes: number;
   downloadFormats: DownloadFormat[];
   priorityProcessing: boolean;
   emailSupport: boolean;
@@ -237,6 +290,7 @@ interface UsageDto {
   remaining_today: number | null;
   resets_at: string;
   max_video_seconds: number;
+  max_upload_bytes?: number;
   download_formats: DownloadFormat[];
   priority_processing: boolean;
   email_support: boolean;
@@ -251,6 +305,7 @@ export async function getUsage(userId: string): Promise<Usage> {
     remainingToday: d.remaining_today,
     resetsAt: d.resets_at,
     maxVideoSeconds: d.max_video_seconds,
+    maxUploadBytes: d.max_upload_bytes ?? 500 * 1024 * 1024,
     downloadFormats: d.download_formats,
     priorityProcessing: d.priority_processing,
     emailSupport: d.email_support,

@@ -1,0 +1,20 @@
+{
+  "tab": "Subir un archivo",
+  "linkTab": "Pegar un enlace",
+  "description": "Sube un archivo de audio o video desde tu dispositivo. Se elimina de nuestros servidores en cuanto termina la transcripción.",
+  "linkDescription": "Los enlaces funcionan cuando es posible: YouTube suele bloquear nuestros servidores. Si un enlace falla, sube el archivo.",
+  "dropTitle": "Suelta un archivo aquí o haz clic para elegirlo",
+  "dropHint": "Audio o video, hasta {{size}} MB y {{minutes}} minutos en tu plan",
+  "change": "Elegir otro archivo",
+  "start": "Subir y transcribir",
+  "uploading": "Subiendo… {{percent}}%",
+  "starting": "Iniciando la transcripción…",
+  "cancel": "Cancelar",
+  "errors": {
+    "notMedia": "Elige un archivo de audio o video.",
+    "tooBig": "Este archivo supera el tamaño permitido por tu plan ({{size}} MB).",
+    "tooLong": "Este archivo supera la duración permitida por tu plan ({{minutes}} minutos).",
+    "failed": "La subida falló. Revisa tu conexión e inténtalo de nuevo.",
+    "cancelled": "Subida cancelada."
+  }
+}

@@ -10,7 +10,8 @@ export default defineConfig({
     },
   },
   root: path.resolve(import.meta.dirname, "client"),
-  // .env files live at the repo root (scripts/load-env-from-ssm.sh writes .env.local there)
+  // VITE_* come from the process env (reboot-server.sh / CI load them from SSM); an optional
+  // .env.local at the repo root still works for people without AWS access (see .env.example)
   envDir: import.meta.dirname,
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),

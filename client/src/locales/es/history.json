@@ -18,5 +18,5 @@
   "copied": "¡Texto copiado al portapapeles!",
   "processingDesc": "Tu transcripción se está procesando. Esto puede tardar unos minutos...",
   "failedDesc": "No pudimos transcribir este video. Inténtalo de nuevo.",
-  "youtubeAccessBlocked": "YouTube bloqueó el acceso desde nuestro servicio. Inténtalo más tarde o usa un enlace directo al video."
+  "youtubeAccessBlocked": "YouTube bloqueó el acceso desde nuestro servicio. Sube el archivo del video en su lugar."
 }

@@ -18,5 +18,5 @@
   "copied": "Text copied to clipboard!",
   "processingDesc": "Your transcription is being processed. This may take a few minutes...",
   "failedDesc": "We couldn't transcribe this video. Please try again.",
-  "youtubeAccessBlocked": "YouTube blocked access from our processing service. Please try again later or use a direct video link."
+  "youtubeAccessBlocked": "YouTube blocked access from our processing service. Upload the video file instead."
 }

@@ -1,0 +1,20 @@
+{
+  "tab": "Upload a file",
+  "linkTab": "Paste a link",
+  "description": "Upload an audio or video file from your device. It is deleted from our servers as soon as the transcription finishes.",
+  "linkDescription": "Links are best-effort: YouTube often blocks our servers. If a link fails, upload the file instead.",
+  "dropTitle": "Drop a file here or click to choose",
+  "dropHint": "Audio or video, up to {{size}} MB and {{minutes}} minutes on your plan",
+  "change": "Choose another file",
+  "start": "Upload and transcribe",
+  "uploading": "Uploading… {{percent}}%",
+  "starting": "Starting transcription…",
+  "cancel": "Cancel",
+  "errors": {
+    "notMedia": "Choose an audio or video file.",
+    "tooBig": "This file is larger than your plan allows ({{size}} MB).",
+    "tooLong": "This file is longer than your plan allows ({{minutes}} minutes).",
+    "failed": "The upload failed. Check your connection and try again.",
+    "cancelled": "Upload cancelled."
+  }
+}
