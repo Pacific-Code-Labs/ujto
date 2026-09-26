@@ -1,5 +1,5 @@
 {
-  "status": "coming-soon",
+  "status": "available",
   "title": {
     "en": "Download the Ujtö̀ app",
     "es": "Descarga la app de Ujtö̀"
@@ -8,7 +8,7 @@
     "en": "Everything in the web dashboard, in a desktop app for macOS, Windows and Linux — plus paste a YouTube link and it downloads the audio **from your own computer**, so links always work.",
     "es": "Todo el panel web en una app de escritorio para macOS, Windows y Linux — y además pega un enlace de YouTube y descarga el audio **desde tu propia computadora**, así los enlaces siempre funcionan."
   },
-  "releaseBaseUrl": "https://github.com/Pacific-Code-Labs/ujto-desktop/releases/latest/download/",
+  "releaseBaseUrl": "https://media.ujto.jcampos.dev/downloads/desktop/latest/",
   "platforms": [
     {
       "os": "mac",
