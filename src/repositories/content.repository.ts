@@ -12,20 +12,31 @@ import seo from "@/content/seo.json";
 import branding from "@/content/branding.json";
 import themes from "@/content/themes.json";
 import media from "@/content/media.json";
-import { loadPublishedContent, type BrandTheme, type MediaLibrary } from "@pacific-code-labs/ujto-ds";
+import { cachedPublishedContent, loadPublishedContent, type BrandTheme, type MediaLibrary } from "@pacific-code-labs/ujto-ds";
 
 // Published documents (edited online in the admin console, public API) override the bundled
-// JSON. Loaded once before the first render (initContent); on any failure the bundle is used.
+// JSON: initContent() uses the last copy this browser saw (sync), refreshContent() fetches fresh
+// ones in the background and reports whether they changed (the caller re-renders).
 const env = import.meta.env;
 const PUBLIC_API =
   env.VITE_PUBLIC_API_URL && env.VITE_PUBLIC_IDENTITY_POOL_ID
     ? { url: env.VITE_PUBLIC_API_URL as string, identityPoolId: env.VITE_PUBLIC_IDENTITY_POOL_ID as string }
     : null;
+const BUNDLED: Record<string, unknown> = { hero, features, pricing, testimonials, story, download, navigation, footer, seo, branding, themes, media };
 let published: Record<string, unknown> = {};
 const doc = <T>(key: string, bundled: T): T => (published[key] as T | undefined) ?? bundled;
 
-export async function initContent() {
-  published = (await loadPublishedContent(PUBLIC_API, "landing")) ?? {};
+export function initContent() {
+  published = cachedPublishedContent("landing") ?? {};
+}
+
+export async function refreshContent(): Promise<boolean> {
+  const fresh = await loadPublishedContent(PUBLIC_API, "landing");
+  if (!fresh) return false;
+  // Changed = differs from what is on screen (the previous published copy, else the bundle).
+  const changed = Object.entries(fresh).some(([key, value]) => JSON.stringify(value) !== JSON.stringify(published[key] ?? BUNDLED[key]));
+  published = fresh;
+  return changed;
 }
 
 export type Hero = typeof hero;
