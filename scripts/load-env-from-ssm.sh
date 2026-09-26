@@ -67,12 +67,17 @@ add_line() {
   echo "  ${variable} <- ${BASE_PATH}/${key}" >&2
 }
 
-# The landing is static and public: it needs no Cognito, API or payment settings.
-# Its only config is where the dashboard lives (optional: the code defaults to prod).
+# The landing is static and public: it needs no user pool, app API or payment settings.
+# Its config is where the dashboard lives and the ANONYMOUS public API (identity pool guests,
+# read-only published content). All optional: the code falls back to prod URLs / bundled content.
 if value="$(get_parameter 'site/app-url')"; then
   add_line VITE_APP_URL site/app-url "${value}"
 else
   echo "Optional parameter ${BASE_PATH}/site/app-url is absent; using the default dashboard URL." >&2
+fi
+if value="$(get_parameter 'public-api/url')"; then add_line VITE_PUBLIC_API_URL public-api/url "${value}"; fi
+if value="$(get_parameter 'public-api/identity-pool-id')"; then
+  add_line VITE_PUBLIC_IDENTITY_POOL_ID public-api/identity-pool-id "${value}"
 fi
 
 if [[ "${OUTPUT_MODE}" == "exports" ]]; then

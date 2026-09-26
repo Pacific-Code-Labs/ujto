@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@pacific-code-labs/ujto-ds':
-        specifier: github:Pacific-Code-Labs/ujto-design-system#v0.1.1
-        version: https://codeload.github.com/Pacific-Code-Labs/ujto-design-system/tar.gz/b346d547deb42ed49fc32b829081066e7de1ca91(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@4.3.3)
+        specifier: github:Pacific-Code-Labs/ujto-design-system#v0.2.0
+        version: https://codeload.github.com/Pacific-Code-Labs/ujto-design-system/tar.gz/2163e18b87f80ca39d5177195346ef4b775765b7(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@4.3.3)
       lucide-react:
         specifier: ^0.453.0
         version: 0.453.0(react@18.3.1)
@@ -328,9 +328,9 @@ packages:
     os: [linux]
     libc: [glibc]
 
-  '@pacific-code-labs/ujto-ds@https://codeload.github.com/Pacific-Code-Labs/ujto-design-system/tar.gz/b346d547deb42ed49fc32b829081066e7de1ca91':
-    resolution: {gitHosted: true, integrity: sha512-QwQ0AgmdE5Y2S/tb6NRMaGd2lwFkkgwOvbZ72VZTEKBdVnCDT0GnwEyWiKvhMN3YgGbTwaTp4ZDUQqMnj9K7nA==, tarball: https://codeload.github.com/Pacific-Code-Labs/ujto-design-system/tar.gz/b346d547deb42ed49fc32b829081066e7de1ca91}
-    version: 0.1.1
+  '@pacific-code-labs/ujto-ds@https://codeload.github.com/Pacific-Code-Labs/ujto-design-system/tar.gz/2163e18b87f80ca39d5177195346ef4b775765b7':
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/Pacific-Code-Labs/ujto-design-system/tar.gz/2163e18b87f80ca39d5177195346ef4b775765b7}
+    version: 0.2.0
     engines: {node: '>=24'}
     peerDependencies:
       react: ^18.3.1
@@ -1677,7 +1677,7 @@ snapshots:
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
 
-  '@pacific-code-labs/ujto-ds@https://codeload.github.com/Pacific-Code-Labs/ujto-design-system/tar.gz/b346d547deb42ed49fc32b829081066e7de1ca91(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@4.3.3)':
+  '@pacific-code-labs/ujto-ds@https://codeload.github.com/Pacific-Code-Labs/ujto-design-system/tar.gz/2163e18b87f80ca39d5177195346ef4b775765b7(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@4.3.3)':
     dependencies:
       '@radix-ui/react-alert-dialog': 1.1.23(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-avatar': 1.2.6(@types/react-dom@18.3.7(@types/react@18.3.31))(@types/react@18.3.31)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
