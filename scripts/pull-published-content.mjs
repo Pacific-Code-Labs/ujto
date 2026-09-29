@@ -54,7 +54,10 @@ async function main() {
   for (const [name, data] of Object.entries(documents ?? {})) {
     const file = path.join(CONTENT, `${name}.json`);
     if (!/^[a-z0-9-]+$/.test(name) || !fs.existsSync(file)) continue;
-    fs.writeFileSync(file, JSON.stringify(data, null, 2) + "\n");
+    // The footer layout can add fields before its published CMS copy is updated.
+    // Keep new bundled fields while allowing published values to override existing ones.
+    const content = name === "footer" ? { ...JSON.parse(fs.readFileSync(file, "utf8")), ...data } : data;
+    fs.writeFileSync(file, JSON.stringify(content, null, 2) + "\n");
     written.push(name);
   }
   console.log(`[content] published ${site} content: ${written.join(", ") || "none"}`);
