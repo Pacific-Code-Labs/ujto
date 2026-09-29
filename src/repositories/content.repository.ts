@@ -60,7 +60,8 @@ export const getTestimonials = (): Testimonials => doc("testimonials", testimoni
 export const getStory = (): Story => doc("story", story);
 export const getDownload = (): Download => doc("download", download);
 export const getNavigation = (): Navigation => doc("navigation", navigation);
-export const getFooter = (): Footer => doc("footer", footer);
+// Merged over the bundle so a published copy saved before a key existed still renders.
+export const getFooter = (): Footer => ({ ...footer, ...doc("footer", footer) });
 export const getSeo = (): Seo => doc("seo", seo);
 export const getBranding = (): Branding => doc("branding", branding);
 export const getThemes = (): BrandTheme[] => doc("themes", themes as BrandTheme[]);

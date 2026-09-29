@@ -79,8 +79,17 @@
       }
     }
   ],
-  "copyright": {
-    "en": "© 2026 Ujtö̀. All rights reserved. Made with ❤️ for content creators worldwide.",
-    "es": "© 2026 Ujtö̀. Todos los derechos reservados. Hecho con ❤️ para creadores de contenido en todo el mundo."
+  "rights": {
+    "en": "All rights reserved.",
+    "es": "Todos los derechos reservados."
+  },
+  "madeBy": {
+    "label": {
+      "en": "A product of",
+      "es": "Un producto de"
+    },
+    "name": "Pacific Code Labs",
+    "url": "https://pacific-code-labs.jcampos.dev",
+    "logoUrl": "/media/pacific-code-labs.png"
   }
 }

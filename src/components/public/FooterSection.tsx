@@ -3,6 +3,12 @@ import { appHref, newTab } from "@/lib/links";
 import { sectionPath, type Section } from "@/lib/sections";
 import { getBranding, getFooter, type FooterLink } from "@/repositories/content.repository";
 
+const linkCls = "text-muted-foreground transition-colors hover:text-primary";
+
+/**
+ * Same layout as the Sokol/Tsuru landings: brand + description, link groups, then the
+ * copyright and the studio credit.
+ */
 export function FooterSection({ onNavigate }: { onNavigate: (section: Section) => void }) {
   const { language } = useLanguage();
   const L = useLocalized();
@@ -10,7 +16,6 @@ export function FooterSection({ onNavigate }: { onNavigate: (section: Section) =
   const branding = getBranding();
 
   const link = (item: FooterLink) => {
-    const cls = "text-brand-sand/70 transition-colors hover:text-brand-sand";
     if (item.kind === "section")
       return (
         <a
@@ -19,41 +24,54 @@ export function FooterSection({ onNavigate }: { onNavigate: (section: Section) =
             e.preventDefault();
             onNavigate(item.target as Section);
           }}
-          className={cls}
+          className={linkCls}
         >
           {L(item.label)}
         </a>
       );
     const href = item.kind === "app" ? appHref(language, item.target) : item.target;
     return (
-      <a href={href} {...newTab} className={cls}>
+      <a href={href} {...newTab} className={linkCls}>
         {L(item.label)}
       </a>
     );
   };
 
   return (
-    <footer id="contact" className="bg-brand-ink py-16 text-brand-sand">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-8 md:grid-cols-4">
-          <div className="md:col-span-2">
-            <BrandLogo variant="reverse" className="mb-4 h-9" alt={branding.companyName} />
-            <p className="mb-6 text-brand-sand/70">{L(footer.description)}</p>
-            <div className="flex gap-4">
-              {footer.social.map((s) => {
-                const Icon = resolveIcon(s.iconName);
-                return (
-                  <a key={s.href} href={s.href} {...newTab} aria-label={L(s.label)} className="text-brand-sand/70 hover:text-brand-sand">
-                    <Icon className="h-6 w-6" />
-                  </a>
-                );
-              })}
-            </div>
+    <footer id="contact" className="border-t border-border bg-muted/40">
+      <div className="mx-auto max-w-7xl px-4 pt-8 pb-6 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+          {/* Brand */}
+          <div className="col-span-2">
+            <a
+              href={sectionPath(language, "hero")}
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate("hero");
+              }}
+              className="mb-4 inline-flex transition-opacity hover:opacity-80"
+            >
+              <BrandLogo className="h-9" alt={branding.companyName} />
+            </a>
+            <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">{L(footer.description)}</p>
+            {footer.social.length > 0 && (
+              <div className="mt-4 flex gap-3">
+                {footer.social.map((s) => {
+                  const Icon = resolveIcon(s.iconName);
+                  return (
+                    <a key={s.href} href={s.href} {...newTab} aria-label={L(s.label)} className={linkCls}>
+                      <Icon className="h-5 w-5" />
+                    </a>
+                  );
+                })}
+              </div>
+            )}
           </div>
+
           {footer.columns.map((col, i) => (
             <div key={i}>
-              <h4 className="mb-4 text-lg font-semibold">{L(col.title)}</h4>
-              <ul className="space-y-2">
+              <h3 className="mb-3 text-sm font-semibold text-foreground">{L(col.title)}</h3>
+              <ul className="space-y-2 text-sm">
                 {col.links.map((item, j) => (
                   <li key={j}>{link(item)}</li>
                 ))}
@@ -61,7 +79,24 @@ export function FooterSection({ onNavigate }: { onNavigate: (section: Section) =
             </div>
           ))}
         </div>
-        <div className="mt-12 border-t border-white/10 pt-8 text-center text-brand-sand/70">{L(footer.copyright)}</div>
+
+        <div className="mt-6 flex flex-col items-center justify-between gap-4 border-t border-border pt-5 text-sm text-muted-foreground sm:flex-row">
+          <p>
+            © {new Date().getFullYear()} {branding.companyName}. {L(footer.rights)}
+          </p>
+
+          {/* Studio credit — the logo ships with alpha, so it sits on both themes without a plate. */}
+          <a href={footer.madeBy.url} {...newTab} className="group flex items-center gap-2 transition-colors hover:text-primary">
+            <span>{L(footer.madeBy.label)}</span>
+            <img
+              src={footer.madeBy.logoUrl}
+              alt={footer.madeBy.name}
+              className="h-7 w-auto opacity-90 transition-opacity group-hover:opacity-100"
+              loading="lazy"
+            />
+            <span className="font-medium text-foreground/80 transition-colors group-hover:text-primary">{footer.madeBy.name}</span>
+          </a>
+        </div>
       </div>
     </footer>
   );
