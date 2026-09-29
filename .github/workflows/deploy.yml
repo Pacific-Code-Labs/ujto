@@ -4,9 +4,6 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  # Daily: re-prerender with the content published from the admin console (SEO catches up).
-  schedule:
-    - cron: "17 6 * * *"
 
 permissions:
   contents: read
@@ -43,9 +40,6 @@ jobs:
 
       - name: Load the dashboard URL and public API from SSM (/ujto/prod/web/*)
         run: bash scripts/load-env-from-ssm.sh prod - --github-env
-
-      - name: Pull the content published from the admin console
-        run: node scripts/pull-published-content.mjs landing
 
       # i18n + hard-coded-text checks, typecheck, vite build, SEO prerender + sitemap
       - run: pnpm build

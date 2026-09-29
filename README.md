@@ -1,8 +1,10 @@
 # ujto — landing
 
 The public landing for **Ujtö̀** (“word; language” in Bribri) at **https://ujto.jcampos.dev**.
-A static, content-driven site (landing-DXP pattern): every visible string and image comes from
-`src/content/*.json` (editable in the private **ujto-admin** CMS) or `src/translations/{en,es}.json`.
+A static, content-driven site (landing-DXP pattern): published content loads from the public API
+in each visitor's browser. `src/content/*.json` provides a fallback when the API is unavailable;
+UI text comes from `src/translations/{en,es}.json`. Edit published content in the private
+**ujto-admin** CMS.
 
 The product itself lives elsewhere:
 - Dashboard: [ujto-app](https://github.com/Pacific-Code-Labs/ujto-app) → https://app.ujto.jcampos.dev
@@ -40,9 +42,11 @@ From the workspace root, `./reboot-server.sh` starts everything with the local d
 
 ## Config
 
-The site has **no runtime backend and no auth**. Its only build setting is the dashboard URL
-(`VITE_APP_URL`, from SSM `/ujto/<env>/web/site/app-url`; defaults to the prod domain).
+The site uses the anonymous public API for content at runtime. Build settings from SSM are the
+dashboard URL (`VITE_APP_URL`) and the public API URL and guest identity pool ID
+(`VITE_PUBLIC_API_URL`, `VITE_PUBLIC_IDENTITY_POOL_ID`).
 
 ## Deploy
 
 Push to `main` → GitHub Actions (pnpm, Node 24) → `pnpm build` → GitHub Pages (`public/CNAME`).
+CI does not pull published content; each page load requests it from the public API.
