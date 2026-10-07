@@ -30,9 +30,9 @@ function upsertLink(rel: string, href: string, hreflang?: string) {
 }
 
 /** Runtime head tags for SPA navigation (the prerender writes the same tags statically). */
-export function applyHeadTags(lang: "en" | "es", path: string, languages: readonly string[]) {
+export function applyHeadTags(lang: "en" | "es", path: string, languages: readonly string[], metaOverride?: { title: string; description: string }) {
   const seo = getSeo();
-  const meta = seo.pages.home[lang] ?? seo.pages.home.en;
+  const meta = metaOverride ?? seo.pages.home[lang] ?? seo.pages.home.en;
   const site = seo.siteUrl.replace(/\/$/, "");
   document.title = meta.title;
   upsertMeta("name", "description", meta.description);
@@ -42,7 +42,11 @@ export function applyHeadTags(lang: "en" | "es", path: string, languages: readon
   upsertMeta("property", "og:image", absoluteAssetUrl(seo.ogImage, site));
   upsertMeta("property", "og:locale", lang === "es" ? "es_CR" : "en_US");
   upsertLink("canonical", site + path);
+  upsertMeta("name", "robots", "index,follow");
   const rest = path.replace(/^\/(en|es)/, "");
   for (const l of languages) upsertLink("alternate", `${site}/${l}${rest}`, l);
   upsertLink("alternate", `${site}/en${rest}`, "x-default");
+  let schema = document.getElementById("site-page-schema") as HTMLScriptElement | null;
+  if (!schema) { schema = document.createElement("script"); schema.id = "site-page-schema"; schema.type = "application/ld+json"; document.head.appendChild(schema); }
+  schema.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "WebPage", name: meta.title, description: meta.description, url: site + path, inLanguage: lang }).replace(/</g, "\\u003c");
 }

@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import { Redirect, Route, Switch, useLocation, useParams } from "wouter";
 import { LanguageProvider, ThemeProvider, TooltipProvider, useLanguage } from "@pacific-code-labs/ujto-ds";
 import { appHref, LEGACY_APP_PATHS } from "@/lib/links";
-import { isSection } from "@/lib/sections";
+import { isSection, sectionPath } from "@/lib/sections";
+import Legal from "@/pages/Legal";
+import { isLegalKey } from "@/legal/LegalBody";
 import Home from "@/pages/Home";
 import NotFound from "@/pages/NotFound";
 import en from "@/translations/en.json";
@@ -28,7 +30,9 @@ function LocalizedRoutes() {
     return LEGACY_APP_PATHS.includes(lang) ? <LegacyRedirect lang={language} /> : <NotFound />;
   }
   if (section && LEGACY_APP_PATHS.includes(section)) return <LegacyRedirect lang={lang} />;
+  if (section && isLegalKey(section)) return <Legal pageKey={section} />;
   if (section && !isSection(section)) return <NotFound />;
+  if (isSection(section)) return <Redirect to={sectionPath(lang, section)} replace />;
   return <Home />;
 }
 

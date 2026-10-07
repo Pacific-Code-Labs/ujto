@@ -2,6 +2,7 @@ import { BrandLogo, resolveIcon, useLanguage, useLocalized } from "@pacific-code
 import { appHref, newTab } from "@/lib/links";
 import { sectionPath, type Section } from "@/lib/sections";
 import { getBranding, getFooter, type FooterLink } from "@/repositories/content.repository";
+import { legalContent } from "@/legal/LegalBody";
 
 const linkCls = "text-muted-foreground transition-colors hover:text-primary";
 
@@ -40,7 +41,7 @@ export function FooterSection({ onNavigate }: { onNavigate: (section: Section) =
   return (
     <footer id="contact" className="border-t border-border bg-muted/40">
       <div className="mx-auto max-w-7xl px-4 pt-8 pb-6 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2">
             <a
@@ -78,6 +79,12 @@ export function FooterSection({ onNavigate }: { onNavigate: (section: Section) =
               </ul>
             </div>
           ))}
+          <div>
+            <h3 className="mb-3 text-sm font-semibold">{L(legalContent.labels.legal)}</h3>
+            <ul className="space-y-2 text-sm">
+              {Object.entries(legalContent.pages).map(([key, page]) => <li key={key}><a href={`/${language}/${key}`} className={linkCls}>{L(page.title)}</a></li>)}
+            </ul>
+          </div>
         </div>
 
         <div className="mt-6 flex flex-col items-center justify-between gap-4 border-t border-border pt-5 text-sm text-muted-foreground sm:flex-row">

@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLanguage } from "@pacific-code-labs/ujto-ds";
-import { useLocation, useParams } from "wouter";
 import { DownloadSection } from "@/components/public/DownloadSection";
 import { FeaturesSection } from "@/components/public/FeaturesSection";
 import { FooterSection } from "@/components/public/FooterSection";
@@ -9,17 +8,15 @@ import { Navbar } from "@/components/public/Navbar";
 import { PricingSection } from "@/components/public/PricingSection";
 import { StorySection } from "@/components/public/StorySection";
 import { TestimonialsSection } from "@/components/public/TestimonialsSection";
-import { isSection, sectionPath, SECTIONS, type Section } from "@/lib/sections";
+import { isSection, SECTIONS, type Section } from "@/lib/sections";
 import { applyHeadTags } from "@/services/seo.service";
 
 /**
- * The landing: one scrollable document. /<lang>/<section> scrolls to that section; a
- * scroll-spy keeps the URL on the section in view (replace, so history stays clean).
+ * One scrollable document per language; fragments preserve shareable sections.
  */
 export default function Home() {
-  const { section } = useParams<{ section?: string }>();
+  const section = window.location.hash.slice(1);
   const { language, languages } = useLanguage();
-  const [, navigate] = useLocation();
   const [active, setActive] = useState<Section | null>(isSection(section) ? section : null);
   const programmatic = useRef(false);
 
@@ -33,11 +30,21 @@ export default function Home() {
 
   // Deep links and back/forward.
   useEffect(() => {
-    if (isSection(section)) scrollTo(section, false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const sync = () => {
+      const target = window.location.hash.slice(1);
+      if (isSection(target)) { setActive(target); scrollTo(target, false); }
+      else { setActive("hero"); scrollTo("hero", false); }
+    };
+    sync();
+    window.addEventListener("hashchange", sync);
+    window.addEventListener("popstate", sync);
+    return () => {
+      window.removeEventListener("hashchange", sync);
+      window.removeEventListener("popstate", sync);
+    };
+  }, [language, scrollTo]);
 
-  const path = `/${language}${isSection(section) && section !== "hero" ? `/${section}` : ""}`;
+  const path = `/${language}`;
   useEffect(() => applyHeadTags(language as "en" | "es", path, languages), [language, path, languages]);
 
   // Scroll-spy: the section crossing the middle of the viewport owns the URL.
@@ -49,8 +56,8 @@ export default function Home() {
         if (!visible) return;
         const id = visible.target.id as Section;
         setActive(id);
-        const next = sectionPath(language, id);
-        if (window.location.pathname !== next) window.history.replaceState(null, "", next + window.location.search);
+        const hash = id === "hero" ? "" : `#${id}`;
+        if (window.location.hash !== hash) window.history.replaceState(null, "", `/${language}${window.location.search}${hash}`);
       },
       { rootMargin: "-50% 0px -50% 0px" },
     );
@@ -63,7 +70,8 @@ export default function Home() {
 
   const go = (target: Section) => {
     setActive(target);
-    navigate(sectionPath(language, target));
+    const hash = target === "hero" ? "" : `#${target}`;
+    window.history.pushState(null, "", `/${language}${window.location.search}${hash}`);
     scrollTo(target);
   };
 

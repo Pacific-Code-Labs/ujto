@@ -32,6 +32,9 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - name: Install static-rendering browser
+        run: pnpm exec playwright install --with-deps chromium
+
       # Read-only role created by ujto-be cloudformation/web-params.yml (trusts this repo).
       - uses: aws-actions/configure-aws-credentials@v4
         with:
